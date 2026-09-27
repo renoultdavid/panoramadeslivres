@@ -111,10 +111,43 @@
                     <h1 class="font-cinzel text-3xl sm:text-4xl lg:text-5xl font-extrabold text-neutral-100 tracking-wider leading-tight">
                         Le coin des bibliophiles
                     </h1>
-                    <div class="w-16 h-px bg-gold/50 ml-auto my-6"></div>
+                    <div class="w-16 h-px bg-gold/50 ml-auto my-4"></div>
                     <p class="text-sm text-neutral-400 font-garamond leading-relaxed">
                         Sélectionnez un siècle dans le bandeau supérieur pour contempler les reliures, frontispices et trésors typographiques de la collection.
                     </p>
+
+                    <!-- ÉLÉGANTE MINI-FRISE MUSÉALE (XIX, XVIII, XVII) ALIGNÉE À DROITE -->
+                    <div class="pt-5 flex justify-end">
+                        <div class="inline-flex items-center gap-3 p-2.5 rounded border border-payne-border/80 bg-[#0c0e14]/85 backdrop-blur-md shadow-2xl">
+                            
+                            <!-- Cartouche XIXe -->
+                            <button onclick="showCentury('XIX')" class="group flex flex-col items-center px-4 py-1.5 rounded hover:bg-payne-light/50 border border-transparent hover:border-gold/40 transition-all duration-300 focus:outline-none">
+                                <span class="font-cinzel text-xs tracking-widest text-neutral-400 group-hover:text-gold transition">XIX<sup class="text-[9px]">e</sup></span>
+                                <span class="font-cinzel text-lg font-bold text-neutral-100 group-hover:text-gold my-0.5">14</span>
+                                <span class="text-[9px] font-garamond text-neutral-400 uppercase tracking-widest">livres</span>
+                            </button>
+
+                            <div class="w-px h-8 bg-payne-border/60"></div>
+
+                            <!-- Cartouche XVIIIe -->
+                            <button onclick="showCentury('XVIII')" class="group flex flex-col items-center px-4 py-1.5 rounded hover:bg-payne-light/50 border border-transparent hover:border-gold/40 transition-all duration-300 focus:outline-none">
+                                <span class="font-cinzel text-xs tracking-widest text-neutral-400 group-hover:text-gold transition">XVIII<sup class="text-[9px]">e</sup></span>
+                                <span class="font-cinzel text-lg font-bold text-neutral-100 group-hover:text-gold my-0.5">20</span>
+                                <span class="text-[9px] font-garamond text-neutral-400 uppercase tracking-widest">livres</span>
+                            </button>
+
+                            <div class="w-px h-8 bg-payne-border/60"></div>
+
+                            <!-- Cartouche XVIIe -->
+                            <button onclick="showCentury('XVII')" class="group flex flex-col items-center px-4 py-1.5 rounded hover:bg-payne-light/50 border border-transparent hover:border-gold/40 transition-all duration-300 focus:outline-none">
+                                <span class="font-cinzel text-xs tracking-widest text-neutral-400 group-hover:text-gold transition">XVII<sup class="text-[9px]">e</sup></span>
+                                <span class="font-cinzel text-lg font-bold text-neutral-100 group-hover:text-gold my-0.5">3</span>
+                                <span class="text-[9px] font-garamond text-neutral-400 uppercase tracking-widest">livres</span>
+                            </button>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -147,22 +180,18 @@
                     <img id="detail-main-image" src="" alt="Vue de l'ouvrage" class="max-w-full max-h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.95)] transition-all duration-300 rounded-sm">
                 </div>
 
-                <!-- Bouton Flèche GAUCHE -->
                 <button id="btn-nav-prev" onclick="prevPage()" title="Feuillet précédent" class="absolute left-4 top-1/2 -translate-y-1/2 bg-[#0c0e13]/80 hover:bg-payne-base border border-payne-border hover:border-gold text-neutral-300 hover:text-gold p-3 rounded-full transition-all duration-200 backdrop-blur-sm opacity-60 hover:opacity-100 focus:outline-none disabled:opacity-0 disabled:pointer-events-none shadow-lg">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
 
-                <!-- Bouton Flèche DROITE -->
                 <button id="btn-nav-next" onclick="nextPage()" title="Feuillet suivant" class="absolute right-4 top-1/2 -translate-y-1/2 bg-[#0c0e13]/80 hover:bg-payne-base border border-payne-border hover:border-gold text-neutral-300 hover:text-gold p-3 rounded-full transition-all duration-200 backdrop-blur-sm opacity-60 hover:opacity-100 focus:outline-none disabled:opacity-0 disabled:pointer-events-none shadow-lg">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </button>
 
-                <!-- Bouton Loupe / Plein écran -->
                 <button onclick="openModalFullscreen()" title="Agrandir en plein écran" class="absolute top-4 right-4 bg-obsidian/85 hover:bg-payne-light border border-payne-border/80 hover:border-gold text-gold p-2 rounded transition-all opacity-0 group-hover:opacity-100 focus:outline-none">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
                 </button>
 
-                <!-- Légende sous image avec âge -->
                 <div class="absolute bottom-3 left-6 right-6 flex items-center justify-between text-[11px] text-neutral-400 font-cinzel bg-obsidian/90 py-1.5 px-3 border border-payne-border/60 backdrop-blur-sm">
                     <span id="detail-image-legend" class="truncate pr-3">Page de titre</span>
                     <span id="detail-image-badge-age" class="text-gold tracking-widest flex-none">ÂGE</span>
@@ -172,7 +201,6 @@
             <!-- PARTIE DROITE (50% de largeur) : 1/3 Haut (Notice) / 2/3 Bas (Grille des vignettes) -->
             <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-[#0b0d12]">
                 
-                <!-- 1/3 HAUT (35% hauteur) -->
                 <div class="h-[35%] flex flex-col p-5 sm:p-6 border-b border-payne-border/80 overflow-hidden">
                     <div class="flex-none pb-2 border-b border-payne-border/50">
                         <div class="flex items-center justify-between mb-1">
@@ -202,7 +230,6 @@
                     </div>
                 </div>
 
-                <!-- 2/3 BAS (65% hauteur) : VIGNETTES EN 3 SECTIONS -->
                 <div class="h-[65%] flex flex-col p-4 sm:p-6 bg-[#090b0f] overflow-hidden">
                     <div class="flex items-center justify-between pb-2 flex-none border-b border-payne-border/40">
                         <span class="font-cinzel text-xs tracking-widest text-neutral-300 uppercase font-semibold">Planches, Ornements & Ex-libris</span>
@@ -823,7 +850,6 @@
             ]
         };
 
-        // Tri chronologique automatique sur tous les siècles
         Object.keys(catalog).forEach(century => {
             catalog[century].sort((a, b) => a.year - b.year);
         });
@@ -927,7 +953,6 @@
 
             renderCategorizedThumbnails(book);
 
-            // Toujours afficher l'image 1 (page de titre) par défaut
             selectPage(0);
         }
 
@@ -944,7 +969,7 @@
             sectionsConfig.forEach(section => {
                 const items = [];
                 book.pages.forEach((page, originalIdx) => {
-                    const cat = page.category || 'gravures';
+                    const cat = page.category || 'ornements';
                     if (cat === section.key) {
                         items.push({ page, originalIdx });
                     }
@@ -983,7 +1008,6 @@
             currentPageIndex = index;
             const page = currentBook.pages[index];
 
-            // 1. Image gauche
             const mainImg = document.getElementById('detail-main-image');
             mainImg.classList.add('opacity-0');
             setTimeout(() => {
@@ -992,10 +1016,8 @@
                 mainImg.classList.remove('opacity-0');
             }, 140);
 
-            // 2. Légende sous image
             document.getElementById('detail-image-legend').innerText = page.caption;
 
-            // 3. Notice descriptive
             const descEl = document.getElementById('detail-description-content');
             const headingEl = document.getElementById('detail-desc-heading');
             
@@ -1007,10 +1029,8 @@
                 descEl.innerHTML = `<p class="italic text-neutral-500 font-garamond">Aucune note particulière pour ce feuillet.</p>`;
             }
 
-            // 4. Compteur
             document.getElementById('mini-counter').innerText = `${index + 1} / ${currentBook.pages.length}`;
 
-            // 5. Stylisation vignette active
             currentBook.pages.forEach((_, i) => {
                 const t = document.getElementById(`thumb-${i}`);
                 if (t) {
@@ -1022,7 +1042,6 @@
                 }
             });
 
-            // 6. État des flèches latérales
             document.getElementById('btn-nav-prev').disabled = (index === 0);
             document.getElementById('btn-nav-next').disabled = (index === currentBook.pages.length - 1);
         }
@@ -1056,7 +1075,6 @@
             document.getElementById('modal-fullscreen').classList.add('hidden');
         }
 
-        // Navigation Clavier
         document.addEventListener('keydown', (e) => {
             const modal = document.getElementById('modal-fullscreen');
             if (!modal.classList.contains('hidden')) {
