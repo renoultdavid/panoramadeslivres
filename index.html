@@ -39,8 +39,8 @@
     <style>
         /* Défilement discret personnalisé */
         .custom-scroll::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
         }
         .custom-scroll::-webkit-scrollbar-track {
             background: rgba(14, 18, 25, 0.6);
@@ -104,15 +104,11 @@
     <!-- ZONE PRINCIPALE -->
     <main class="flex-1 relative overflow-hidden bg-obsidian">
 
-        <!-- 1. VUE ACCUEIL (Image plein cadre & textes à droite) -->
+        <!-- 1. VUE ACCUEIL -->
         <section id="view-home" class="absolute inset-0 z-10 flex">
-            <!-- Arrière-plan plein écran -->
             <img src="https://lh3.googleusercontent.com/d/1L7-35JlyIevgR4dNtKV73NI7CHyJgnX5" alt="Bibliothèque d'ouvrages précieux" class="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.88] contrast-[1.05]">
-            
-            <!-- Voile dégradé sombre vers la droite -->
             <div class="absolute inset-0 bg-gradient-to-l from-[#08090b]/95 via-[#08090b]/60 to-transparent"></div>
 
-            <!-- Bloc Titre sur la partie sombre à droite -->
             <div class="relative z-10 ml-auto w-full md:w-1/2 lg:w-5/12 h-full flex flex-col justify-center px-8 sm:px-12 lg:px-16 text-right">
                 <div class="space-y-4">
                     <span class="inline-block font-cinzel text-xs tracking-[0.35em] text-gold uppercase pb-1 border-b border-gold/40">
@@ -132,7 +128,6 @@
         <!-- 2. VUE MOSAÏQUE DES COUVERTURES (par Siècle) -->
         <section id="view-gallery" class="absolute inset-0 z-10 hidden flex-col bg-obsidian overflow-y-auto custom-scroll p-6 sm:p-10">
             <div class="max-w-6xl mx-auto w-full">
-                <!-- En-tête siècle -->
                 <div class="flex items-center justify-between border-b border-payne-border pb-4 mb-8">
                     <div>
                         <span class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">Collection</span>
@@ -143,35 +138,30 @@
                     </button>
                 </div>
 
-                <!-- Grille des livres -->
                 <div id="books-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                    <!-- Généré dynamiquement -->
                 </div>
             </div>
         </section>
 
-        <!-- 3. VUE FICHE LIVRE (Exactement 50% gauche / 50% droite) -->
+        <!-- 3. VUE FICHE LIVRE (50% GAUCHE / 50% DROITE) -->
         <section id="view-book-detail" class="absolute inset-0 z-10 hidden flex flex-col md:flex-row bg-[#08090b]">
             
-            <!-- PARTIE GAUCHE (50% de la largeur totale) : Grande Image Haute Définition -->
+            <!-- PARTIE GAUCHE (50% de largeur) : Grande image -->
             <div class="w-full md:w-1/2 h-1/2 md:h-full relative bg-[#050608] border-b md:border-b-0 md:border-r border-payne-border flex items-center justify-center p-4 sm:p-8 overflow-hidden">
                 <div class="relative w-full h-full flex items-center justify-center">
-                    <img id="detail-main-image" src="" alt="Vue de l'ouvrage" class="max-w-full max-h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] transition-all duration-500 rounded-sm">
+                    <img id="detail-main-image" src="" alt="Vue de l'ouvrage" class="max-w-full max-h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] transition-all duration-300 rounded-sm">
                 </div>
-                <!-- Légende sous image -->
                 <div class="absolute bottom-3 left-6 right-6 flex items-center justify-between text-[11px] text-neutral-400 font-cinzel bg-obsidian/85 py-1 px-3 border border-payne-border/60 backdrop-blur-sm">
                     <span id="detail-image-legend">Page de titre</span>
                     <span class="text-gold tracking-widest">COLLECTION PRIVÉE</span>
                 </div>
             </div>
 
-            <!-- PARTIE DROITE (50% de la largeur totale) : Divisée exactement en deux moitiés égales (50% haut / 50% bas) -->
+            <!-- PARTIE DROITE (50% de largeur) : 50% Haut (Notice) / 50% Bas (Grille de 3 colonnes avec ascenseur) -->
             <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-[#0b0d12]">
                 
-                <!-- MOITIÉ SUPÉRIEURE (50% de la hauteur) : En-tête + Notice textuelle avec son ascenseur -->
+                <!-- MOITIÉ SUPÉRIEURE : Titre, Auteur, Notice avec ascenseur -->
                 <div class="h-1/2 flex flex-col p-6 sm:p-8 border-b border-payne-border/80 overflow-hidden">
-                    
-                    <!-- En-tête fixe -->
                     <div class="flex-none pb-3 border-b border-payne-border/50">
                         <div class="flex items-center justify-between mb-1.5">
                             <span id="detail-century" class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">XVIIe SIÈCLE</span>
@@ -190,9 +180,9 @@
                         </p>
                     </div>
 
-                    <!-- Zone de Notice avec Ascenseur -->
+                    <!-- Notice descriptive -->
                     <div class="flex-1 mt-3 overflow-y-auto pr-3 custom-scroll">
-                        <div class="flex items-center gap-2 mb-1.5 sticky top-0 bg-[#0b0d12]/95 py-0.5 z-10 backdrop-blur-xs">
+                        <div class="flex items-center gap-2 mb-1.5 sticky top-0 bg-[#0b0d12]/95 py-0.5 z-10">
                             <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
                             <h4 id="detail-desc-heading" class="font-cinzel text-xs uppercase tracking-widest text-gold/90">Notice & Présentation</h4>
                         </div>
@@ -201,19 +191,18 @@
                     </div>
                 </div>
 
-                <!-- MOITIÉ INFÉRIEURE (50% de la hauteur) : Espace Miniatures grand format pour combler le vide -->
-                <div class="h-1/2 flex flex-col p-6 sm:p-8 bg-[#090b0f] overflow-hidden">
-                    <div class="flex items-center justify-between pb-3 flex-none">
-                        <div class="flex items-center gap-2">
-                            <span class="font-cinzel text-xs tracking-widest text-neutral-300 uppercase font-semibold">Feuilleter l'ouvrage</span>
-                            <span class="text-[11px] font-garamond italic text-neutral-500">(Sélectionnez une planche pour l'afficher en grand)</span>
-                        </div>
-                        <span id="mini-counter" class="text-xs font-cinzel text-gold font-medium bg-payne-base/80 px-2.5 py-0.5 rounded border border-payne-border">1 / 10</span>
+                <!-- MOITIÉ INFÉRIEURE : GRILLE DE 3 MINIATURES DE LARGE AVEC ASCENSEUR -->
+                <div class="h-1/2 flex flex-col p-5 sm:p-6 bg-[#090b0f] overflow-hidden">
+                    <div class="flex items-center justify-between pb-3 flex-none border-b border-payne-border/40">
+                        <span class="font-cinzel text-xs tracking-widest text-neutral-300 uppercase font-semibold">Planches & Feuillets</span>
+                        <span id="mini-counter" class="text-xs font-cinzel text-gold font-medium bg-payne-base px-2.5 py-0.5 rounded border border-payne-border">1 / 10</span>
                     </div>
                     
-                    <!-- Galerie des miniatures : grandes cartes avec défilement fluide sans vide -->
-                    <div id="detail-thumbnails-container" class="flex-1 flex gap-4 overflow-x-auto items-center pb-2 pt-1 custom-scroll px-1">
-                        <!-- Miniatures générées dynamiquement -->
+                    <!-- Conteneur grille 3 colonnes avec défilement vertical -->
+                    <div class="flex-1 overflow-y-auto custom-scroll pr-1.5 pt-3">
+                        <div id="detail-thumbnails-grid" class="grid grid-cols-3 gap-3.5 pb-4">
+                            <!-- Les miniatures s'insèrent ici par 3 de large -->
+                        </div>
                     </div>
                 </div>
 
@@ -267,12 +256,12 @@
                         },
                         {
                             url: "https://lh3.googleusercontent.com/d/1Fnt58tWLYdTGhzBVmXocU0O-ax2bISb2",
-                            caption: "Bandeau gravé & lettrine ornée (A)",
+                            caption: "Bandeau gravé & lettrine (A)",
                             notice: "Un somptueux bandeau ou en-tête gravé composé de rinceaux feuillagés et de volutes symétriques surplombe le titre du chapitre, tandis que le texte typographié en caractères romains et italiques s'ouvre par une magnifique lettrine ornée (\"A\") encadrée de motifs floraux et géométriques gravés sur bois."
                         },
                         {
                             url: "https://lh3.googleusercontent.com/d/10tEFyAtOArpcuhrhn71M89P7ttlAubP1",
-                            caption: "Cul-de-lampe au mascaron maniériste",
+                            caption: "Cul-de-lampe au mascaron",
                             notice: "Un cul-de-lampe ou fleuron final gravé en creux présente un motif ornemental complexe de style maniériste, composé d'un mascaron ou d'un visage humain encadré de volutes et de draperies, surmontant des rinceaux feuillagés et des pendeloques suspendues en partie basse."
                         },
                         {
@@ -297,12 +286,12 @@
                     pages: [
                         {
                             url: "https://lh3.googleusercontent.com/d/10tPRmJYcyymSCKf0pqEIlzYB0QzKdx5S",
-                            caption: "Page de titre (1673) & Vision de Constantin",
+                            caption: "Page de titre & Vision de Constantin",
                             notice: "La page de titre gravée d'une édition parisienne de 1673 présente, sous les mentions typographiques de l'ouvrage historique de Flavius Josèphe traduit par Arnauld d'Andilly, une belle vignette centrale rectangulaire illustrant une scène de vision chrétienne (la vision de Constantin) avec une grande croix lumineuse rayonnante portant l'inscription \"In hoc signo vinces\", des soldats ébahis agenouillés au campement et un ange dans le ciel, surmontant l'adresse de l'imprimeur parisien Pierre Le Petit."
                         },
                         {
                             url: "https://lh3.googleusercontent.com/d/1039BJolGnJDHwyfBHytzmQZTtmTcomdl",
-                            caption: "Avertissement & Lettrine ornée (L)",
+                            caption: "Avertissement & Lettrine (L)",
                             notice: "Un élégant bandeau typographique composé de fleurets floraux répétés en frise surplombe le titre « AVERTISSEMENT », tandis que le texte en caractères italiques s'ouvre sur une magnifique lettrine ornée (« L ») encadrée de feuillages gravés sur bois."
                         },
                         {
@@ -312,12 +301,12 @@
                         },
                         {
                             url: "https://lh3.googleusercontent.com/d/106Hbdo62iFK5Ux08lApeBrnYySyangPc",
-                            caption: "Construction de l'Arche (Grande gravure sur cuivre)",
+                            caption: "Construction de l'Arche",
                             notice: "Une grande gravure sur cuivre en page entière représente une scène architecturale et biblique (la construction de l'Arche avec en haut un bâtiment rectangulaire à portiques et en bas une vaste perspective géométrique entourée de palissades, de personnages en costumes d'époque et d'animaux)."
                         },
                         {
                             url: "https://lh3.googleusercontent.com/d/10C6w5z77vnbBonphg1WyVFLJdAvOKiXJ",
-                            caption: "Description de l'Arche d'alliance & Chérubins",
+                            caption: "L'Arche d'alliance & Chérubins",
                             notice: "Une illustration gravée au centre de la page accompagne le titre du chapitre \"Description de l'Arche qui estoit dans le Tabernacle\", représentant un coffre rectangulaire sculpté (l'Arche d'alliance) surmonté de deux chérubins ailés agenouillés qui se font face, le tout placé dans un paysage sous un ciel nuageux."
                         },
                         {
@@ -327,17 +316,17 @@
                         },
                         {
                             url: "https://lh3.googleusercontent.com/d/10KNa43aBFki8avW1rRzTAAdRtJorbxjP",
-                            caption: "La Menorah (Grand candélabre à sept branches)",
+                            caption: "La Menorah (Candélabre)",
                             notice: "Une gravure sur cuivre en page entière représente une menorah, le grand candélabre à sept branches richement orné et surmonté de flammes, dressé sur un pied ouvragé au premier plan d'un paysage vallonné où se tiennent trois personnages en robes contemplant la scène."
                         },
                         {
                             url: "https://lh3.googleusercontent.com/d/10RixPOu5r9n3uDGWe2BTtFwcPxi17x4n",
-                            caption: "Ustensiles liturgiques, bassins & autel",
+                            caption: "Ustensiles liturgiques & Autel",
                             notice: "Des ustensiles liturgiques et des bassins sont disposés au premier plan de cette composition qui met en scène un autel rectangulaire à anneaux de transport et un petit foyer dégageant une épaisse fumée vers un ciel zébré de nuages."
                         },
                         {
                             url: "https://lh3.googleusercontent.com/d/1-abfCBZ78RYvDxoWfIfpod0CT9XJu1e4",
-                            caption: "Cérémonie sacerdotale de l'encens (Chapitre VIII)",
+                            caption: "Cérémonie sacerdotale de l'encens",
                             notice: "Deux personnages bibliques en costumes sacerdotaux, dont l'un porte le pectoral richement orné et la tiare, se font face pour manipuler un encensoir suspendu qui dégage d'importants panaches de fumée, sous le titre courant du \"Livre III. Chapitre VIII. 173\"."
                         },
                         {
@@ -439,26 +428,25 @@
             document.getElementById('detail-author').innerText = book.author;
             document.getElementById('detail-edition').innerText = book.edition;
 
-            const thumbsContainer = document.getElementById('detail-thumbnails-container');
-            thumbsContainer.innerHTML = '';
+            const gridContainer = document.getElementById('detail-thumbnails-grid');
+            gridContainer.innerHTML = '';
 
+            // Remplissage de la grille de 3 de large
             book.pages.forEach((page, index) => {
                 const card = document.createElement('button');
                 card.id = `thumb-${index}`;
                 card.onclick = () => selectPage(index);
-                card.className = `flex-none flex flex-col items-center p-2 rounded border transition-all duration-300 transform focus:outline-none ${index === 0 ? 'border-gold bg-payne-base/70 shadow-[0_0_15px_rgba(197,168,128,0.25)] scale-[1.02]' : 'border-payne-border bg-black/40 hover:border-gold/60 hover:bg-payne-base/40 opacity-75 hover:opacity-100'}`;
-                
-                // Grandes dimensions pour bien occuper les 50% de hauteur
-                card.style.width = "125px";
-                card.style.height = "100%";
+                card.className = `group flex flex-col p-2 rounded border text-left transition-all duration-200 focus:outline-none ${index === 0 ? 'border-gold bg-payne-base shadow-[0_0_12px_rgba(197,168,128,0.25)] ring-1 ring-gold' : 'border-payne-border/80 bg-black/40 hover:border-gold/50 hover:bg-payne-base/30'}`;
 
                 card.innerHTML = `
-                    <div class="w-full flex-1 overflow-hidden bg-black/70 rounded-xs flex items-center justify-center p-0.5">
-                        <img src="${page.url}" alt="${page.caption}" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[3/4] w-full overflow-hidden bg-black/80 rounded-xs flex items-center justify-center border border-payne-border/40 group-hover:border-gold/40">
+                        <img src="${page.url}" alt="${page.caption}" class="w-full h-full object-cover">
                     </div>
-                    <span class="block w-full text-[10px] font-cinzel text-neutral-300 truncate mt-2 text-center tracking-wider">${page.caption}</span>
+                    <span class="block text-[10px] font-cinzel text-neutral-300 group-hover:text-gold truncate mt-1.5 tracking-wider">
+                        ${index + 1}. ${page.caption}
+                    </span>
                 `;
-                thumbsContainer.appendChild(card);
+                gridContainer.appendChild(card);
             });
 
             selectPage(0);
@@ -475,7 +463,7 @@
                 mainImg.src = page.url;
                 mainImg.alt = page.caption;
                 mainImg.classList.remove('opacity-0');
-            }, 180);
+            }, 150);
 
             // 2. Légende sous image
             document.getElementById('detail-image-legend').innerText = page.caption;
@@ -495,14 +483,14 @@
             // 4. Compteur
             document.getElementById('mini-counter').innerText = `${index + 1} / ${currentBook.pages.length}`;
 
-            // 5. Stylisation vignette active (mise en valeur grand format)
+            // 5. Stylisation vignette active
             currentBook.pages.forEach((_, i) => {
                 const t = document.getElementById(`thumb-${i}`);
                 if (t) {
                     if (i === index) {
-                        t.className = "flex-none flex flex-col items-center p-2 rounded border-2 border-gold bg-payne-base shadow-[0_0_16px_rgba(197,168,128,0.35)] scale-[1.03] opacity-100 transition-all duration-300";
+                        t.className = "group flex flex-col p-2 rounded border-2 border-gold bg-payne-base shadow-[0_0_14px_rgba(197,168,128,0.3)] ring-1 ring-gold text-left transition-all duration-200";
                     } else {
-                        t.className = "flex-none flex flex-col items-center p-2 rounded border border-payne-border bg-black/40 hover:border-gold/60 hover:bg-payne-base/40 opacity-70 hover:opacity-100 transition-all duration-300";
+                        t.className = "group flex flex-col p-2 rounded border border-payne-border/80 bg-black/40 hover:border-gold/50 hover:bg-payne-base/30 text-left opacity-75 hover:opacity-100 transition-all duration-200";
                     }
                 }
             });
