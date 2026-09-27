@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-[#08090b]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le coin des bibliophiles</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Polices Google Fonts : Cinzel & Cormorant Garamond -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#08090b',
+                        payne: {
+                            base: '#1a1f2c',
+                            light: '#2a3246',
+                            border: '#353e56'
+                        },
+                        gold: {
+                            DEFAULT: '#c5a880',
+                            dim: '#8f7a5d',
+                            light: '#e6d5b8'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        garamond: ['Cormorant Garamond', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Défilement discret pour la description */
+        .custom-scroll::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(14, 18, 25, 0.6);
+            border-radius: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #2a3246;
+            border-radius: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #c5a880;
+        }
+
+        /* Halo pulsant pour les siècles */
+        @keyframes pulse-halo {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.35);
+            }
+            50% {
+                box-shadow: 0 0 14px 3px rgba(197, 168, 128, 0.65);
+            }
+        }
+        .century-btn-pulse {
+            animation: pulse-halo 3.2s infinite ease-in-out;
+        }
+        .century-btn-pulse:nth-child(2) {
+            animation-delay: 1.1s;
+        }
+        .century-btn-pulse:nth-child(3) {
+            animation-delay: 2.2s;
+        }
+    </style>
+</head>
+<body class="h-full bg-obsidian text-neutral-300 font-garamond antialiased flex flex-col overflow-hidden select-none">
+
+    <!-- BANDEAU SUPÉRIEUR MUSÉAL -->
+    <header class="h-16 flex-none bg-[#0c0e13]/95 border-b border-payne-border/60 px-6 sm:px-10 flex items-center justify-between z-30 shadow-2xl backdrop-blur-md">
+        <!-- Logo / Titre Retour Accueil -->
+        <button onclick="showHome()" class="flex items-center gap-3 group text-left transition focus:outline-none">
+            <span class="w-2.5 h-2.5 rounded-full bg-gold/80 group-hover:scale-125 transition-transform"></span>
+            <div>
+                <span class="font-cinzel text-sm sm:text-base font-bold tracking-[0.25em] text-neutral-200 group-hover:text-gold transition">LE COIN DES BIBLIOPHILES</span>
+                <span class="block text-[10px] tracking-widest text-neutral-400 font-cinzel uppercase -mt-0.5">La beauté des livres</span>
+            </div>
+        </button>
+
+        <!-- Sélecteur de Siècles Pulsant -->
+        <nav class="flex items-center gap-3 sm:gap-4">
+            <button onclick="showCentury('XVII')" id="btn-XVII" class="century-btn-pulse px-3.5 sm:px-4 py-1.5 rounded border border-gold/40 bg-payne-base/80 hover:bg-payne-light hover:border-gold text-gold font-cinzel text-xs tracking-wider transition-all duration-300 transform active:scale-95">
+                XVII<sup class="text-[9px]">e</sup>
+            </button>
+            <button onclick="showCentury('XVIII')" id="btn-XVIII" class="century-btn-pulse px-3.5 sm:px-4 py-1.5 rounded border border-neutral-700/60 bg-payne-base/60 hover:bg-payne-light hover:border-gold text-neutral-300 hover:text-gold font-cinzel text-xs tracking-wider transition-all duration-300 transform active:scale-95">
+                XVIII<sup class="text-[9px]">e</sup>
+            </button>
+            <button onclick="showCentury('XIX')" id="btn-XIX" class="century-btn-pulse px-3.5 sm:px-4 py-1.5 rounded border border-neutral-700/60 bg-payne-base/60 hover:bg-payne-light hover:border-gold text-neutral-300 hover:text-gold font-cinzel text-xs tracking-wider transition-all duration-300 transform active:scale-95">
+                XIX<sup class="text-[9px]">e</sup>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ZONE PRINCIPALE -->
+    <main class="flex-1 relative overflow-hidden bg-obsidian">
+
+        <!-- 1. VUE ACCUEIL (Image plein cadre & textes à droite) -->
+        <section id="view-home" class="absolute inset-0 z-10 flex">
+            <!-- Arrière-plan plein écran -->
+            <img src="https://lh3.googleusercontent.com/d/1L7-35JlyIevgR4dNtKV73NI7CHyJgnX5" alt="Bibliothèque d'ouvrages précieux" class="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.88] contrast-[1.05]">
+            
+            <!-- Voile dégradé sombre vers la droite -->
+            <div class="absolute inset-0 bg-gradient-to-l from-[#08090b]/95 via-[#08090b]/60 to-transparent"></div>
+
+            <!-- Bloc Titre sur la partie sombre à droite -->
+            <div class="relative z-10 ml-auto w-full md:w-1/2 lg:w-5/12 h-full flex flex-col justify-center px-8 sm:px-12 lg:px-16 text-right">
+                <div class="space-y-4">
+                    <span class="inline-block font-cinzel text-xs tracking-[0.35em] text-gold uppercase pb-1 border-b border-gold/40">
+                        La beauté des livres
+                    </span>
+                    <h1 class="font-cinzel text-3xl sm:text-4xl lg:text-5xl font-extrabold text-neutral-100 tracking-wider leading-tight">
+                        Le coin des bibliophiles
+                    </h1>
+                    <div class="w-16 h-px bg-gold/50 ml-auto my-6"></div>
+                    <p class="text-sm text-neutral-400 font-garamond leading-relaxed">
+                        Sélectionnez un siècle dans le bandeau supérieur pour contempler les reliures, frontispices et trésors typographiques de la collection.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. VUE MOSAÏQUE DES COUVERTURES (par Siècle) -->
+        <section id="view-gallery" class="absolute inset-0 z-10 hidden flex-col bg-obsidian overflow-y-auto custom-scroll p-6 sm:p-10">
+            <div class="max-w-6xl mx-auto w-full">
+                <!-- En-tête siècle -->
+                <div class="flex items-center justify-between border-b border-payne-border pb-4 mb-8">
+                    <div>
+                        <span class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">Collection</span>
+                        <h2 id="gallery-title" class="font-cinzel text-2xl sm:text-3xl text-neutral-100">Siècle XVII</h2>
+                    </div>
+                    <button onclick="showHome()" class="text-xs font-cinzel tracking-widest text-neutral-400 hover:text-gold uppercase transition flex items-center gap-1.5">
+                        &larr; Retour accueil
+                    </button>
+                </div>
+
+                <!-- Grille des livres -->
+                <div id="books-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    <!-- Généré dynamiquement -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. VUE FICHE LIVRE (Exactement 50% gauche / 50% droite) -->
+        <section id="view-book-detail" class="absolute inset-0 z-10 hidden flex flex-col md:flex-row bg-[#08090b]">
+            
+            <!-- PARTIE GAUCHE (50%) : Grande Image -->
+            <div class="w-full md:w-1/2 h-1/2 md:h-full relative bg-[#050608] border-b md:border-b-0 md:border-r border-payne-border flex items-center justify-center p-4 sm:p-8 overflow-hidden">
+                <div class="relative w-full h-full flex items-center justify-center">
+                    <img id="detail-main-image" src="" alt="Vue de l'ouvrage" class="max-w-full max-h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] transition-all duration-500 rounded-sm">
+                </div>
+                <!-- Légende sous image -->
+                <div class="absolute bottom-3 left-6 right-6 flex items-center justify-between text-[11px] text-neutral-400 font-cinzel bg-obsidian/75 py-1 px-3 border border-payne-border/60 backdrop-blur-sm">
+                    <span id="detail-image-legend">Page de titre</span>
+                    <span class="text-gold tracking-widest">COLLECTION PRIVÉE</span>
+                </div>
+            </div>
+
+            <!-- PARTIE DROITE (50%) : Données, Notice & Ascenseur, Miniatures -->
+            <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-[#0b0d12] p-6 sm:p-10 justify-between">
+                
+                <!-- 1. En-tête de l'ouvrage (Fixe) -->
+                <div class="border-b border-payne-border pb-4 flex-none">
+                    <div class="flex items-center justify-between mb-2">
+                        <span id="detail-century" class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">XVIIe SIÈCLE</span>
+                        <button onclick="backToGallery()" class="text-[11px] font-cinzel tracking-widest text-neutral-400 hover:text-gold uppercase transition flex items-center gap-1">
+                            &larr; Revenir aux livres
+                        </button>
+                    </div>
+                    <h2 id="detail-title" class="font-cinzel text-2xl sm:text-3xl text-neutral-100 font-semibold tracking-wide leading-tight mb-1">
+                        Titre de l'ouvrage
+                    </h2>
+                    <p id="detail-author" class="font-garamond italic text-lg text-neutral-300">
+                        Auteur
+                    </p>
+                    <p id="detail-edition" class="text-xs font-cinzel text-neutral-400 tracking-wider mt-1">
+                        Détails d'édition
+                    </p>
+                </div>
+
+                <!-- 2. Bloc de description (Avec ascenseur fluide) -->
+                <div class="flex-1 my-5 overflow-y-auto pr-3 custom-scroll">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                        <h4 id="detail-desc-heading" class="font-cinzel text-xs uppercase tracking-widest text-gold/90">Notice & Présentation</h4>
+                    </div>
+                    <!-- Texte descriptif dynamique -->
+                    <div id="detail-description-content" class="text-neutral-300 text-base sm:text-lg leading-relaxed font-light font-garamond space-y-3">
+                    </div>
+                </div>
+
+                <!-- 3. Section des Miniatures (Fixe en bas) -->
+                <div class="flex-none pt-3 border-t border-payne-border">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <span class="font-cinzel text-[11px] tracking-widest text-neutral-400 uppercase">Feuilleter l'ouvrage (Sélection de pages)</span>
+                        <span id="mini-counter" class="text-[11px] font-cinzel text-gold">1 / 1</span>
+                    </div>
+                    
+                    <div id="detail-thumbnails-container" class="flex gap-2.5 overflow-x-auto pb-2 custom-scroll">
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- SCRIPT DE GESTION -->
+    <script>
+        const catalog = {
+            XVII: [
+                {
+                    id: "chemin-perfection-1627",
+                    title: "Le chemin de perfection",
+                    author: "Composé par la S. Mère Terese de Iesus (Sainte Thérèse d'Ávila)",
+                    centuryLabel: "XVIIe SIÈCLE &bull; 1627",
+                    edition: "À Lyon, chés Claude Rigaud & Claude Obert, rue Merciere, à l'enseigne de la Fortune (1627)",
+                    coverImage: "https://lh3.googleusercontent.com/d/1LM2H37Aw37c-JwwgmjeaKPgABwGsKorn",
+                    pages: [
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1LM2H37Aw37c-JwwgmjeaKPgABwGsKorn",
+                            caption: "Page de titre (1627)",
+                            notice: "Cette page de titre gravée d'une édition lyonnaise de 1627 présente, sous un petit fleuron floral de rinceaux, une superbe vignette centrale ovale affichant le monogramme IHS surmonté d'une croix et d'un cœur enflammé, le tout cerné par une éclatante couronne de rayons flamboyants et de motifs guillochés, tandis qu'un gracieux ornement typographique souligne le nom de la ville."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1Ppi6agE3jv18ScbE_XKCOMmbQiza4T0q",
+                            caption: "Reliure d'époque",
+                            notice: "Reliure d'époque en plein cuir avec dos orné de nerfs et filets dorés, témoin du travail soigné des ateliers de reliure du premier tiers du XVIIe siècle."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1wE5b6Vewn9z2BfjdNVbkpTxJCCItJUIJ",
+                            caption: "Feuillet intérieur",
+                            notice: ""
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1r1KxcS8457I6xPSWw5mmX3H3UjMsZLnQ",
+                            caption: "Page de texte",
+                            notice: ""
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1I-lyNhqb0apCwBDGUaLdxWalvoWPTium",
+                            caption: "Page manuscrite annotée",
+                            notice: "Cette page manuscrite ancienne présente une écriture cursive tracée à l'encre brune sur un papier jauni et usé par le temps, comportant des annotations de notes personnelles ou de comptes."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1nX3Ds5yXMpTgJECDsNY0SvJsdWRaa1sh",
+                            caption: "Mention manuscrite de propriété",
+                            notice: "Élégante écriture cursive à l'encre brune sur un papier vergé jauni, portant une inscription de propriété exarée à la main (\"Ce livre est aux... de Notre Dame d'Anonnay\")."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1Fnt58tWLYdTGhzBVmXocU0O-ax2bISb2",
+                            caption: "Bandeau gravé & lettrine ornée (A)",
+                            notice: "Un somptueux bandeau ou en-tête gravé composé de rinceaux feuillagés et de volutes symétriques surplombe le titre du chapitre, tandis que le texte typographié en caractères romains et italiques s'ouvre par une magnifique lettrine ornée (\"A\") encadrée de motifs floraux et géométriques gravés sur bois."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/10tEFyAtOArpcuhrhn71M89P7ttlAubP1",
+                            caption: "Cul-de-lampe au mascaron maniériste",
+                            notice: "Un cul-de-lampe ou fleuron final gravé en creux présente un motif ornemental complexe de style maniériste, composé d'un mascaron ou d'un visage humain encadré de volutes et de draperies, surmontant des rinceaux feuillagés et des pendeloques suspendues en partie basse."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1Z15iKkudCg5ntYOSGNha002kZalzjKiA",
+                            caption: "Lettrine ornée (R)",
+                            notice: "Une lettrine ornée (« R ») finement gravée sur bois met en valeur l'ouverture du texte, encadrée de motifs feuillagés et de rinceaux typiques des compositions typographiques de l'époque, sous un titre de chapitre et un texte en caractères italiques et romains."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1uErIkhDyuvMzHU35xoTIbKwyUfuX4RAg",
+                            caption: "Page de garde & notes juridiques",
+                            notice: "Une page de garde ancienne en papier vergé jauni et patine comporte des notes manuscrites à l'encre brune en écriture cursive juridique ou notariale de l'époque, avec quelques déchirures et réparations de papier anciennes sur les bords."
+                        }
+                    ]
+                },
+                {
+                    id: "histoire-des-juifs-1673",
+                    title: "Histoire des Juifs (Antiquitez Judaïques)",
+                    author: "Flavius Joseph (Traduite par Monsieur Arnauld d'Andilly)",
+                    centuryLabel: "XVIIe SIÈCLE &bull; 1673",
+                    edition: "À Paris, chez Pierre Le Petit, Imprimeur & Libraire ordinaire du Roy, rue S. Jacques, à la Croix d'Or (1673)",
+                    coverImage: "https://lh3.googleusercontent.com/d/10tPRmJYcyymSCKf0pqEIlzYB0QzKdx5S",
+                    pages: [
+                        {
+                            url: "https://lh3.googleusercontent.com/d/10tPRmJYcyymSCKf0pqEIlzYB0QzKdx5S",
+                            caption: "Page de titre (1673) & Vision de Constantin",
+                            notice: "La page de titre gravée d'une édition parisienne de 1673 présente, sous les mentions typographiques de l'ouvrage historique de Flavius Josèphe traduit par Arnauld d'Andilly, une belle vignette centrale rectangulaire illustrant une scène de vision chrétienne (la vision de Constantin) avec une grande croix lumineuse rayonnante portant l'inscription \"In hoc signo vinces\", des soldats ébahis agenouillés au campement et un ange dans le ciel, surmontant l'adresse de l'imprimeur parisien Pierre Le Petit."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1039BJolGnJDHwyfBHytzmQZTtmTcomdl",
+                            caption: "Avertissement & Lettrine ornée (L)",
+                            notice: "Un élégant bandeau typographique composé de fleurets floraux répétés en frise surplombe le titre « AVERTISSEMENT », tandis que le texte en caractères italiques s'ouvre sur une magnifique lettrine ornée (« L ») encadrée de feuillages gravés sur bois."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/105lDJWcduQIfVzVQfpUwEqe8WpXivaPu",
+                            caption: "Cul-de-lampe au bouquet & fleurets",
+                            notice: "Un magnifique cul-de-lampe ou fleuron gravé sur bois représente un vase ou un cornet d'où s'échappe un riche bouquet de fleurs stylisées aux pétales épanouis, faisant face à une page de texte typographiée en caractères romains et italiques sous un bandeau de fleurets et une lettrine ornée."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/106Hbdo62iFK5Ux08lApeBrnYySyangPc",
+                            caption: "Construction de l'Arche (Grande gravure sur cuivre)",
+                            notice: "Une grande gravure sur cuivre en page entière représente une scène architecturale et biblique (la construction de l'Arche avec en haut un bâtiment rectangulaire à portiques et en bas une vaste perspective géométrique entourée de palissades, de personnages en costumes d'époque et d'animaux)."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/10C6w5z77vnbBonphg1WyVFLJdAvOKiXJ",
+                            caption: "Description de l'Arche d'alliance & Chérubins",
+                            notice: "Une illustration gravée au centre de la page accompagne le titre du chapitre \"Description de l'Arche qui estoit dans le Tabernacle\", représentant un coffre rectangulaire sculpté (l'Arche d'alliance) surmonté de deux chérubins ailés agenouillés qui se font face, le tout placé dans un paysage sous un ciel nuageux."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/10EK4MUHIkq2HLh6D5WDb9EYxiGAc8KkO",
+                            caption: "Table & Autels du Tabernacle",
+                            notice: "Une gravure centrale illustre le chapitre VII (\"Description de la Table, du Chandelier d'or, & des Autels qui estoient dans le Tabernacle\"), représentant une longue table sculptée aux pieds colonnaires et munie de barres de transport, sur laquelle reposent deux coupes surmontées de nuages de fumée ou d'encens, le tout s'ouvrant sur un paysage vallonné en arrière-plan."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/10KNa43aBFki8avW1rRzTAAdRtJorbxjP",
+                            caption: "La Menorah (Grand candélabre à sept branches)",
+                            notice: "Une gravure sur cuivre en page entière représente une menorah, le grand candélabre à sept branches richement orné et surmonté de flammes, dressé sur un pied ouvragé au premier plan d'un paysage vallonné où se tiennent trois personnages en robes contemplant la scène."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/10RixPOu5r9n3uDGWe2BTtFwcPxi17x4n",
+                            caption: "Ustensiles liturgiques, bassins & autel",
+                            notice: "Des ustensiles liturgiques et des bassins sont disposés au premier plan de cette composition qui met en scène un autel rectangulaire à anneaux de transport et un petit foyer dégageant une épaisse fumée vers un ciel zébré de nuages."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1-abfCBZ78RYvDxoWfIfpod0CT9XJu1e4",
+                            caption: "Cérémonie sacerdotale de l'encens (Chapitre VIII)",
+                            notice: "Deux personnages bibliques en costumes sacerdotaux, dont l'un porte le pectoral richement orné et la tiare, se font face pour manipuler un encensoir suspendu qui dégage d'importants panaches de fumée, sous le titre courant du \"Livre III. Chapitre VIII. 173\"."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1-dxNqhQrGXBO0f6pXwtnGZlCOHqXohnA",
+                            caption: "Cul-de-lampe au panier fleuri",
+                            notice: "Un charmant petit cul-de-lampe ou fleuron gravé sur bois met en scène un panier tressé d'où jaillit une composition foisonnante de fleurs et de feuillages stylisés."
+                        }
+                    ]
+                }
+            ],
+            XVIII: [],
+            XIX: []
+        };
+
+        let currentCentury = 'XVII';
+        let currentBook = null;
+
+        const viewHome = document.getElementById('view-home');
+        const viewGallery = document.getElementById('view-gallery');
+        const viewBookDetail = document.getElementById('view-book-detail');
+
+        function hideAllViews() {
+            viewHome.classList.add('hidden');
+            viewGallery.classList.add('hidden');
+            viewBookDetail.classList.add('hidden');
+        }
+
+        function showHome() {
+            hideAllViews();
+            viewHome.classList.remove('hidden');
+            highlightCenturyButton(null);
+        }
+
+        function showCentury(century) {
+            currentCentury = century;
+            hideAllViews();
+            viewGallery.classList.remove('hidden');
+            highlightCenturyButton(century);
+
+            const titleEl = document.getElementById('gallery-title');
+            titleEl.innerHTML = century === 'XVII' ? 'Ouvrages du XVII<sup class="text-sm">e</sup> siècle' : 
+                               (century === 'XVIII' ? 'Ouvrages du XVIII<sup class="text-sm">e</sup> siècle' : 'Ouvrages du XIX<sup class="text-sm">e</sup> siècle');
+
+            const grid = document.getElementById('books-grid');
+            grid.innerHTML = '';
+
+            const books = catalog[century] || [];
+
+            if (books.length === 0) {
+                grid.className = "py-16 text-center text-neutral-500 font-garamond italic text-lg";
+                grid.innerHTML = `
+                    <div class="max-w-md mx-auto p-8 border border-dashed border-payne-border rounded bg-payne-base/30">
+                        <p class="font-cinzel text-neutral-400 not-italic text-sm mb-2">Rayon en cours de catalogage</p>
+                        <p>Les ouvrages du ${century}<sup>e</sup> siècle seront bientôt ajoutés à la collection.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6";
+
+            books.forEach(book => {
+                const card = document.createElement('div');
+                card.className = "group cursor-pointer bg-[#0e1117] border border-payne-border hover:border-gold p-3 rounded transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.8)]";
+                card.onclick = () => openBook(book);
+
+                card.innerHTML = `
+                    <div class="aspect-[3/4] overflow-hidden bg-black/60 rounded-sm mb-3 flex items-center justify-center">
+                        <img src="${book.coverImage}" alt="${book.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <span class="block text-[10px] font-cinzel text-gold tracking-widest uppercase mb-1">${book.centuryLabel.split('&bull;')[1] || ''}</span>
+                    <h3 class="font-cinzel text-sm text-neutral-200 group-hover:text-gold line-clamp-2 transition leading-tight">${book.title}</h3>
+                    <p class="font-garamond italic text-xs text-neutral-400 line-clamp-1 mt-1">${book.author}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function highlightCenturyButton(century) {
+            ['XVII', 'XVIII', 'XIX'].forEach(c => {
+                const btn = document.getElementById(`btn-${c}`);
+                if (c === century) {
+                    btn.classList.add('border-gold', 'text-gold', 'bg-payne-base');
+                    btn.classList.remove('border-neutral-700/60', 'text-neutral-300');
+                } else {
+                    btn.classList.remove('border-gold', 'text-gold', 'bg-payne-base');
+                    btn.classList.add('border-neutral-700/60', 'text-neutral-300');
+                }
+            });
+        }
+
+        function openBook(book) {
+            currentBook = book;
+            hideAllViews();
+            viewBookDetail.classList.remove('hidden');
+
+            document.getElementById('detail-century').innerHTML = book.centuryLabel;
+            document.getElementById('detail-title').innerText = book.title;
+            document.getElementById('detail-author').innerText = book.author;
+            document.getElementById('detail-edition').innerText = book.edition;
+
+            const thumbsContainer = document.getElementById('detail-thumbnails-container');
+            thumbsContainer.innerHTML = '';
+
+            book.pages.forEach((page, index) => {
+                const thumb = document.createElement('button');
+                thumb.className = `flex-none w-14 h-20 rounded border ${index === 0 ? 'border-gold ring-1 ring-gold' : 'border-payne-border opacity-70'} hover:opacity-100 overflow-hidden bg-black transition-all transform hover:scale-105 focus:outline-none`;
+                thumb.id = `thumb-${index}`;
+                thumb.onclick = () => selectPage(index);
+
+                thumb.innerHTML = `
+                    <img src="${page.url}" alt="${page.caption}" class="w-full h-full object-cover">
+                `;
+                thumbsContainer.appendChild(thumb);
+            });
+
+            selectPage(0);
+        }
+
+        function selectPage(index) {
+            if (!currentBook || !currentBook.pages[index]) return;
+            const page = currentBook.pages[index];
+
+            // 1. Image gauche
+            const mainImg = document.getElementById('detail-main-image');
+            mainImg.classList.add('opacity-0');
+            setTimeout(() => {
+                mainImg.src = page.url;
+                mainImg.alt = page.caption;
+                mainImg.classList.remove('opacity-0');
+            }, 180);
+
+            // 2. Légende
+            document.getElementById('detail-image-legend').innerText = page.caption;
+
+            // 3. Notice & description
+            const descEl = document.getElementById('detail-description-content');
+            const headingEl = document.getElementById('detail-desc-heading');
+            
+            headingEl.innerText = page.caption;
+
+            if (page.notice && page.notice.trim() !== "") {
+                descEl.innerHTML = `<p>${page.notice}</p>`;
+            } else {
+                descEl.innerHTML = `<p class="italic text-neutral-500 font-garamond">Aucune note particulière pour ce feuillet.</p>`;
+            }
+
+            // 4. Compteur
+            document.getElementById('mini-counter').innerText = `${index + 1} / ${currentBook.pages.length}`;
+
+            // 5. Stylisation vignette active
+            currentBook.pages.forEach((_, i) => {
+                const t = document.getElementById(`thumb-${i}`);
+                if (t) {
+                    if (i === index) {
+                        t.className = "flex-none w-14 h-20 rounded border-2 border-gold ring-1 ring-gold opacity-100 overflow-hidden bg-black transition-all";
+                    } else {
+                        t.className = "flex-none w-14 h-20 rounded border border-payne-border opacity-60 hover:opacity-100 overflow-hidden bg-black transition-all";
+                    }
+                }
+            });
+        }
+
+        function backToGallery() {
+            showCentury(currentCentury);
+        }
+    </script>
+</body>
+</html>
