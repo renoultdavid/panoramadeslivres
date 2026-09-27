@@ -54,7 +54,7 @@
             background: #c5a880;
         }
 
-        /* Halo pulsant pour les siècles */
+        /* Halo pulsant pour les boutons de siècle */
         @keyframes pulse-halo {
             0%, 100% {
                 box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.35);
@@ -125,12 +125,12 @@
             </div>
         </section>
 
-        <!-- 2. VUE MOSAÏQUE DES COUVERTURES (par Siècle) -->
+        <!-- 2. VUE MOSAÏQUE DES COUVERTURES (par Siècle - Tri chronologique) -->
         <section id="view-gallery" class="absolute inset-0 z-10 hidden flex-col bg-obsidian overflow-y-auto custom-scroll p-6 sm:p-10">
             <div class="max-w-6xl mx-auto w-full">
                 <div class="flex items-center justify-between border-b border-payne-border pb-4 mb-8">
                     <div>
-                        <span class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">Collection</span>
+                        <span class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">Collection Muséale &bull; Ordre Chronologique</span>
                         <h2 id="gallery-title" class="font-cinzel text-2xl sm:text-3xl text-neutral-100">Siècle XVII</h2>
                     </div>
                     <button onclick="showHome()" class="text-xs font-cinzel tracking-widest text-neutral-400 hover:text-gold uppercase transition flex items-center gap-1.5">
@@ -146,25 +146,35 @@
         <!-- 3. VUE FICHE LIVRE (50% GAUCHE / 50% DROITE) -->
         <section id="view-book-detail" class="absolute inset-0 z-10 hidden flex flex-col md:flex-row bg-[#08090b]">
             
-            <!-- PARTIE GAUCHE (50% de largeur) : Grande image -->
-            <div class="w-full md:w-1/2 h-1/2 md:h-full relative bg-[#050608] border-b md:border-b-0 md:border-r border-payne-border flex items-center justify-center p-4 sm:p-8 overflow-hidden">
+            <!-- PARTIE GAUCHE (50% de largeur) : Grande image HD avec mode plein écran -->
+            <div class="w-full md:w-1/2 h-1/2 md:h-full relative bg-[#050608] border-b md:border-b-0 md:border-r border-payne-border flex items-center justify-center p-4 sm:p-8 overflow-hidden group">
                 <div class="relative w-full h-full flex items-center justify-center">
-                    <img id="detail-main-image" src="" alt="Vue de l'ouvrage" class="max-w-full max-h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] transition-all duration-300 rounded-sm">
+                    <img id="detail-main-image" src="" alt="Vue de l'ouvrage" class="max-w-full max-h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.95)] transition-all duration-300 rounded-sm">
                 </div>
-                <div class="absolute bottom-3 left-6 right-6 flex items-center justify-between text-[11px] text-neutral-400 font-cinzel bg-obsidian/85 py-1 px-3 border border-payne-border/60 backdrop-blur-sm">
-                    <span id="detail-image-legend">Page de titre</span>
-                    <span class="text-gold tracking-widest">COLLECTION PRIVÉE</span>
+
+                <!-- Bouton loupe / plein écran -->
+                <button onclick="openModalFullscreen()" title="Agrandir en plein écran" class="absolute top-4 right-4 bg-obsidian/80 hover:bg-payne-light border border-payne-border/80 hover:border-gold text-gold p-2 rounded transition-all opacity-0 group-hover:opacity-100 focus:outline-none">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+                </button>
+
+                <!-- Légende sous image avec âge du livre -->
+                <div class="absolute bottom-3 left-6 right-6 flex items-center justify-between text-[11px] text-neutral-400 font-cinzel bg-obsidian/90 py-1.5 px-3 border border-payne-border/60 backdrop-blur-sm">
+                    <span id="detail-image-legend" class="truncate pr-3">Page de titre</span>
+                    <span id="detail-image-badge-age" class="text-gold tracking-widest flex-none">399 ANS</span>
                 </div>
             </div>
 
             <!-- PARTIE DROITE (50% de largeur) : 50% Haut (Notice) / 50% Bas (Grille de 3 colonnes avec ascenseur) -->
             <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-[#0b0d12]">
                 
-                <!-- MOITIÉ SUPÉRIEURE : Titre, Auteur, Notice avec ascenseur -->
+                <!-- MOITIÉ SUPÉRIEURE : En-tête + Notice textuelle avec ascenseur -->
                 <div class="h-1/2 flex flex-col p-6 sm:p-8 border-b border-payne-border/80 overflow-hidden">
                     <div class="flex-none pb-3 border-b border-payne-border/50">
                         <div class="flex items-center justify-between mb-1.5">
-                            <span id="detail-century" class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">XVIIe SIÈCLE</span>
+                            <div class="flex items-center gap-2">
+                                <span id="detail-century" class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">XVIIe SIÈCLE</span>
+                                <span id="detail-age-pill" class="text-[10px] font-cinzel bg-gold/15 text-gold px-2 py-0.5 rounded border border-gold/40">399 ans</span>
+                            </div>
                             <button onclick="backToGallery()" class="text-[11px] font-cinzel tracking-widest text-neutral-400 hover:text-gold uppercase transition flex items-center gap-1">
                                 &larr; Revenir aux livres
                             </button>
@@ -194,14 +204,15 @@
                 <!-- MOITIÉ INFÉRIEURE : GRILLE DE 3 MINIATURES DE LARGE AVEC ASCENSEUR -->
                 <div class="h-1/2 flex flex-col p-5 sm:p-6 bg-[#090b0f] overflow-hidden">
                     <div class="flex items-center justify-between pb-3 flex-none border-b border-payne-border/40">
-                        <span class="font-cinzel text-xs tracking-widest text-neutral-300 uppercase font-semibold">Planches & Feuillets</span>
+                        <div class="flex items-center gap-2">
+                            <span class="font-cinzel text-xs tracking-widest text-neutral-300 uppercase font-semibold">Planches & Feuillets</span>
+                            <span class="text-[11px] font-garamond italic text-neutral-500 hidden sm:inline">(Navigation au clavier : &larr; &rarr;)</span>
+                        </div>
                         <span id="mini-counter" class="text-xs font-cinzel text-gold font-medium bg-payne-base px-2.5 py-0.5 rounded border border-payne-border">1 / 10</span>
                     </div>
                     
-                    <!-- Conteneur grille 3 colonnes avec défilement vertical -->
                     <div class="flex-1 overflow-y-auto custom-scroll pr-1.5 pt-3">
                         <div id="detail-thumbnails-grid" class="grid grid-cols-3 gap-3.5 pb-4">
-                            <!-- Les miniatures s'insèrent ici par 3 de large -->
                         </div>
                     </div>
                 </div>
@@ -212,12 +223,22 @@
 
     </main>
 
+    <!-- MODAL PLEIN ÉCRAN POUR CONTEMPLER L'IMAGE EN GRAND -->
+    <div id="modal-fullscreen" class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-6 cursor-zoom-out" onclick="closeModalFullscreen()">
+        <img id="modal-fullscreen-img" src="" alt="Vue haute résolution" class="max-w-full max-h-[90vh] object-contain drop-shadow-2xl">
+        <p id="modal-fullscreen-legend" class="font-cinzel text-xs text-neutral-300 mt-4 tracking-wider"></p>
+        <span class="text-[10px] text-neutral-500 font-cinzel mt-1">Cliquez n'importe où ou appuyez sur Échap pour fermer</span>
+    </div>
+
     <!-- SCRIPT DE GESTION -->
     <script>
+        const CURRENT_YEAR = 2026;
+
         const catalog = {
             XVII: [
                 {
                     id: "chemin-perfection-1627",
+                    year: 1627,
                     title: "Le chemin de perfection",
                     author: "Composé par la S. Mère Terese de Iesus (Sainte Thérèse d'Ávila)",
                     centuryLabel: "XVIIe SIÈCLE &bull; 1627",
@@ -278,6 +299,7 @@
                 },
                 {
                     id: "histoire-des-juifs-1673",
+                    year: 1673,
                     title: "Histoire des Juifs (Antiquitez Judaïques)",
                     author: "Flavius Joseph (Traduite par Monsieur Arnauld d'Andilly)",
                     centuryLabel: "XVIIe SIÈCLE &bull; 1673",
@@ -335,14 +357,71 @@
                             notice: "Un charmant petit cul-de-lampe ou fleuron gravé sur bois met en scène un panier tressé d'où jaillit une composition foisonnante de fleurs et de feuillages stylisés."
                         }
                     ]
+                },
+                {
+                    id: "catechisme-reims-1692",
+                    year: 1692,
+                    title: "Catéchisme ou Doctrine Chrétienne",
+                    author: "Imprimé par ordre de Charles-Maurice Le Tellier, Archevêque Duc de Reims, Premier Pair de France",
+                    centuryLabel: "XVIIe SIÈCLE &bull; 1692",
+                    edition: "À Paris, chez Antoine Dezallier, rue Saint Jacques, à la Couronne d'Or (1692)",
+                    coverImage: "https://lh3.googleusercontent.com/d/11CMY4YM7M4-i_pgNpdGh7fU61sUVX8fN",
+                    pages: [
+                        {
+                            url: "https://lh3.googleusercontent.com/d/11CMY4YM7M4-i_pgNpdGh7fU61sUVX8fN",
+                            caption: "Page de titre aux armes ducales (1692)",
+                            notice: "Une composition héraldique somptueuse s'affiche au centre de cette page de titre parisienne de 1692 pour le catéchisme de l'archevêque duc de Reims, mettant en scène un écu surmonté d'une couronne comtale ou ducale et encadré de cordelières à houppes de prélat, le tout complété par des annotations manuscrites anciennes mentionnant son appartenance à l'abbaye de Juigny en 1724."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/1106RZVmBEVJwmbgOzDToeraI_M2NjOp_",
+                            caption: "Cul-de-lampe triangulaire & rinceaux",
+                            notice: "Un délicat cul-de-lampe typographique triangulaire formé de rinceaux symétriques, de volutes et de petites fleurs stylisées vient clore la page sous le texte imprimé en caractères romains."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/11aIaxpHlfJy0Vz9R3UIVcAA7VG9CP_5b",
+                            caption: "Fleuron maniériste au mascaron & oiseaux",
+                            notice: "Un fleuron ou cul-de-lampe gravé sur bois de style maniériste met en scène un mascaron central encadré de volutes symétriques, surmonté d'un panier garni de feuillets et flanqué de deux oiseaux perchés qui se penchent vers le sommet."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/11ZQwl37MA2JEulUqEG3F7mveZ5kHMNKR",
+                            caption: "Cartouche au mascaron & figures grotesques",
+                            notice: "Un cartouche ornemental gravé sur bois de style Renaissance tardive ou maniériste met en scène un mascaron grimaçant flanqué de profils monstrueux ou de figures grotesques encadrées de rinceaux sculptés."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/11RYtmNbtnGWsbKGLARWRV7raVWUe7HIP",
+                            caption: "Panier en osier fleuri",
+                            notice: "Un élégant panier en osier tressé déborde d'une composition florale symétrique et foisonnante composée de fleurs épanouies et de feuilles découpées, formant un fleuron ornemental typique des impressions anciennes."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/11QIBGa6gF6GC1VWLx4EQQgMDODI3re5n",
+                            caption: "Lettrine ornée géométrique (Q)",
+                            notice: "Une lettrine ornée carrée gravée sur bois met en valeur la lettre « Q » inscrite au centre d'un losange géométrique finement ciselé, encadré de motifs feuillagés dans les coins et de frises torsadées, introduisant le texte en caractères typographiques."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/11P6vI78_fPyMRxegmezc6i7t4TEV3W2A",
+                            caption: "Bandeau du Petit Catéchisme",
+                            notice: "Un magnifique bandeau typographique gravé sur bois, richement orné de rinceaux symétriques, de volutes et de fleurs épanouies, surplombe le titre en caractères majuscules « PETIT CATECHISME, OU ABREGE DE LA DOCTRINE CHRESTIENNE »."
+                        },
+                        {
+                            url: "https://lh3.googleusercontent.com/d/11GfrI1uqr9xPr11K7XVqoGR8TTWIs_Jr",
+                            caption: "Mandement épiscopal & Lettrine (C)",
+                            notice: "Encadré par un élégant encadrement rectangulaire, un somptueux bandeau typographique gravé sur bois déploie des rinceaux feuillagés et des volutes florales au-dessus du mot « MANDEMENT » et des lignes typographiques annonçant les titres de l'archevêque duc de Reims, tandis qu'une belle lettrine ornée (« C ») introduit le texte épiscopal."
+                        }
+                    ]
                 }
             ],
             XVIII: [],
             XIX: []
         };
 
+        // Tri automatique par ordre chronologique croissant
+        Object.keys(catalog).forEach(century => {
+            catalog[century].sort((a, b) => a.year - b.year);
+        });
+
         let currentCentury = 'XVII';
         let currentBook = null;
+        let currentPageIndex = 0;
 
         const viewHome = document.getElementById('view-home');
         const viewGallery = document.getElementById('view-gallery');
@@ -389,17 +468,24 @@
             grid.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6";
 
             books.forEach(book => {
+                const bookAge = CURRENT_YEAR - book.year;
                 const card = document.createElement('div');
-                card.className = "group cursor-pointer bg-[#0e1117] border border-payne-border hover:border-gold p-3 rounded transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.8)]";
+                card.className = "group cursor-pointer bg-[#0e1117] border border-payne-border hover:border-gold p-3 rounded transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.8)] flex flex-col justify-between";
                 card.onclick = () => openBook(book);
 
                 card.innerHTML = `
-                    <div class="aspect-[3/4] overflow-hidden bg-black/60 rounded-sm mb-3 flex items-center justify-center">
-                        <img src="${book.coverImage}" alt="${book.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div>
+                        <div class="aspect-[3/4] overflow-hidden bg-black/60 rounded-sm mb-3 flex items-center justify-center relative">
+                            <img src="${book.coverImage}" alt="${book.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <!-- Badge Âge sur la couverture -->
+                            <div class="absolute top-2 right-2 bg-obsidian/85 border border-gold/40 text-gold px-1.5 py-0.5 rounded text-[9px] font-cinzel tracking-wider backdrop-blur-xs">
+                                ${bookAge} ans
+                            </div>
+                        </div>
+                        <span class="block text-[10px] font-cinzel text-gold tracking-widest uppercase mb-1">${book.year}</span>
+                        <h3 class="font-cinzel text-sm text-neutral-200 group-hover:text-gold line-clamp-2 transition leading-tight">${book.title}</h3>
                     </div>
-                    <span class="block text-[10px] font-cinzel text-gold tracking-widest uppercase mb-1">${book.centuryLabel.split('&bull;')[1] || ''}</span>
-                    <h3 class="font-cinzel text-sm text-neutral-200 group-hover:text-gold line-clamp-2 transition leading-tight">${book.title}</h3>
-                    <p class="font-garamond italic text-xs text-neutral-400 line-clamp-1 mt-1">${book.author}</p>
+                    <p class="font-garamond italic text-xs text-neutral-400 line-clamp-1 mt-2">${book.author}</p>
                 `;
                 grid.appendChild(card);
             });
@@ -420,10 +506,15 @@
 
         function openBook(book) {
             currentBook = book;
+            currentPageIndex = 0;
             hideAllViews();
             viewBookDetail.classList.remove('hidden');
 
+            const bookAge = CURRENT_YEAR - book.year;
+
             document.getElementById('detail-century').innerHTML = book.centuryLabel;
+            document.getElementById('detail-age-pill').innerText = `${bookAge} ans`;
+            document.getElementById('detail-image-badge-age').innerText = `${bookAge} ANS`;
             document.getElementById('detail-title').innerText = book.title;
             document.getElementById('detail-author').innerText = book.author;
             document.getElementById('detail-edition').innerText = book.edition;
@@ -431,7 +522,7 @@
             const gridContainer = document.getElementById('detail-thumbnails-grid');
             gridContainer.innerHTML = '';
 
-            // Remplissage de la grille de 3 de large
+            // Remplissage de la grille de 3 colonnes de large
             book.pages.forEach((page, index) => {
                 const card = document.createElement('button');
                 card.id = `thumb-${index}`;
@@ -454,6 +545,7 @@
 
         function selectPage(index) {
             if (!currentBook || !currentBook.pages[index]) return;
+            currentPageIndex = index;
             const page = currentBook.pages[index];
 
             // 1. Image gauche
@@ -499,6 +591,47 @@
         function backToGallery() {
             showCentury(currentCentury);
         }
+
+        // MODE PLEIN ÉCRAN POUR CONTEMPLATION
+        function openModalFullscreen() {
+            if (!currentBook || !currentBook.pages[currentPageIndex]) return;
+            const page = currentBook.pages[currentPageIndex];
+            const modal = document.getElementById('modal-fullscreen');
+            document.getElementById('modal-fullscreen-img').src = page.url;
+            document.getElementById('modal-fullscreen-legend').innerText = `${currentBook.title} — ${page.caption}`;
+            modal.classList.remove('hidden');
+        }
+
+        function closeModalFullscreen() {
+            document.getElementById('modal-fullscreen').classList.add('hidden');
+        }
+
+        // NAVIGATION AU CLAVIER (Flèches gauche/droite et Échap)
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('modal-fullscreen');
+            if (!modal.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeModalFullscreen();
+                return;
+            }
+
+            if (!viewBookDetail.classList.contains('hidden') && currentBook) {
+                if (e.key === 'ArrowRight') {
+                    if (currentPageIndex < currentBook.pages.length - 1) {
+                        selectPage(currentPageIndex + 1);
+                    }
+                } else if (e.key === 'ArrowLeft') {
+                    if (currentPageIndex > 0) {
+                        selectPage(currentPageIndex - 1);
+                    }
+                } else if (e.key === 'Escape') {
+                    backToGallery();
+                }
+            } else if (!viewGallery.classList.contains('hidden')) {
+                if (e.key === 'Escape') {
+                    showHome();
+                }
+            }
+        });
     </script>
 </body>
 </html>
