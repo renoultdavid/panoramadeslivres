@@ -142,16 +142,30 @@
         <!-- 3. VUE FICHE LIVRE (50% GAUCHE / 50% DROITE) -->
         <section id="view-book-detail" class="absolute inset-0 z-10 hidden flex flex-col md:flex-row bg-[#08090b]">
             
-            <!-- PARTIE GAUCHE (50% de largeur) : Grande image HD -->
+            <!-- PARTIE GAUCHE (50% de largeur) : Grande image HD + BOUTONS PRÉCÉDENT / SUIVANT -->
             <div class="w-full md:w-1/2 h-1/2 md:h-full relative bg-[#050608] border-b md:border-b-0 md:border-r border-payne-border flex items-center justify-center p-4 sm:p-8 overflow-hidden group">
+                
+                <!-- Cadre image centrale -->
                 <div class="relative w-full h-full flex items-center justify-center">
                     <img id="detail-main-image" src="" alt="Vue de l'ouvrage" class="max-w-full max-h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.95)] transition-all duration-300 rounded-sm">
                 </div>
 
-                <button onclick="openModalFullscreen()" title="Agrandir en plein écran" class="absolute top-4 right-4 bg-obsidian/80 hover:bg-payne-light border border-payne-border/80 hover:border-gold text-gold p-2 rounded transition-all opacity-0 group-hover:opacity-100 focus:outline-none">
+                <!-- Bouton Flèche GAUCHE (Précédent) -->
+                <button id="btn-nav-prev" onclick="prevPage()" title="Feuillet précédent" class="absolute left-4 top-1/2 -translate-y-1/2 bg-[#0c0e13]/80 hover:bg-payne-base border border-payne-border hover:border-gold text-neutral-300 hover:text-gold p-3 rounded-full transition-all duration-200 backdrop-blur-sm opacity-60 hover:opacity-100 focus:outline-none disabled:opacity-0 disabled:pointer-events-none shadow-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+
+                <!-- Bouton Flèche DROITE (Suivant) -->
+                <button id="btn-nav-next" onclick="nextPage()" title="Feuillet suivant" class="absolute right-4 top-1/2 -translate-y-1/2 bg-[#0c0e13]/80 hover:bg-payne-base border border-payne-border hover:border-gold text-neutral-300 hover:text-gold p-3 rounded-full transition-all duration-200 backdrop-blur-sm opacity-60 hover:opacity-100 focus:outline-none disabled:opacity-0 disabled:pointer-events-none shadow-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+
+                <!-- Bouton Loupe / Plein écran -->
+                <button onclick="openModalFullscreen()" title="Agrandir en plein écran" class="absolute top-4 right-4 bg-obsidian/85 hover:bg-payne-light border border-payne-border/80 hover:border-gold text-gold p-2 rounded transition-all opacity-0 group-hover:opacity-100 focus:outline-none">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
                 </button>
 
+                <!-- Légende sous image avec âge du livre -->
                 <div class="absolute bottom-3 left-6 right-6 flex items-center justify-between text-[11px] text-neutral-400 font-cinzel bg-obsidian/90 py-1.5 px-3 border border-payne-border/60 backdrop-blur-sm">
                     <span id="detail-image-legend" class="truncate pr-3">Page de titre</span>
                     <span id="detail-image-badge-age" class="text-gold tracking-widest flex-none">ÂGE</span>
@@ -161,7 +175,7 @@
             <!-- PARTIE DROITE (50% de largeur) : 1/3 Haut (Notice) / 2/3 Bas (Grille des vignettes sans vide) -->
             <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-[#0b0d12]">
                 
-                <!-- 1/3 HAUT (environ 35% de la hauteur) : En-tête + Notice avec ascenseur -->
+                <!-- 1/3 HAUT (35% hauteur) : En-tête + Notice avec ascenseur -->
                 <div class="h-[35%] flex flex-col p-5 sm:p-6 border-b border-payne-border/80 overflow-hidden">
                     <div class="flex-none pb-2 border-b border-payne-border/50">
                         <div class="flex items-center justify-between mb-1">
@@ -191,7 +205,7 @@
                     </div>
                 </div>
 
-                <!-- 2/3 BAS (environ 65% de la hauteur) : VIGNETTES EN 3 SECTIONS PHYSIQUES (3 DE LARGE) -->
+                <!-- 2/3 BAS (65% hauteur) : VIGNETTES EN 3 SECTIONS PHYSIQUES (3 DE LARGE) -->
                 <div class="h-[65%] flex flex-col p-4 sm:p-6 bg-[#090b0f] overflow-hidden">
                     <div class="flex items-center justify-between pb-2 flex-none border-b border-payne-border/40">
                         <span class="font-cinzel text-xs tracking-widest text-neutral-300 uppercase font-semibold">Planches, Ornements & Ex-libris</span>
@@ -199,7 +213,7 @@
                     </div>
                     
                     <div id="detail-sections-container" class="flex-1 overflow-y-auto custom-scroll pr-1.5 pt-2 space-y-4">
-                        <!-- Sections et grilles générées par JavaScript -->
+                        <!-- Sections générées par JavaScript -->
                     </div>
                 </div>
 
@@ -218,7 +232,6 @@
 
     <!-- SCRIPT DE GESTION -->
     <script>
-        // Année calculée en temps réel (2026, 2027, etc.)
         const CURRENT_YEAR = new Date().getFullYear();
 
         const catalog = {
@@ -503,9 +516,9 @@
                     ]
                 },
                 {
-                    id: "souffrances-jesus-christ-1709",
+                    id: "souffrances-jesus-christ-t1-1709",
                     year: 1709,
-                    title: "Les Souffrances de Nostre-Seigneur Jesus-Christ",
+                    title: "Les Souffrances de Nostre-Seigneur Jesus-Christ (Tome I)",
                     author: "Traduit du portugais par le Père Alleaume",
                     centuryLabel: "XVIIIe SIÈCLE &bull; 1709",
                     edition: "Tome I. À Paris, chez Jean-Baptiste Delespine (1709)",
@@ -546,6 +559,276 @@
                             url: "https://lh3.googleusercontent.com/d/12LjOKcEUxg1BRaQ2Bd6DVqy8gbrgnKSH",
                             caption: "Provenance Monastère Visitation Sainte-Marie d'Amiens",
                             notice: "Tracée d'une main sûre à l'encre brune sur la page de garde, une écriture cursive ancienne consigne la provenance monastique de l'exemplaire : « ce livre est du Monastère de la Visitation Sainte Marie d'Amiens », complétée d'une petite croix tracée en contrebas."
+                        }
+                    ]
+                },
+                {
+                    id: "souffrances-jesus-christ-t2-1709",
+                    year: 1709,
+                    title: "Les Souffrances de Nostre-Seigneur Jesus-Christ (Tome II)",
+                    author: "Traduit du portugais par le Père Alleaume",
+                    centuryLabel: "XVIIIe SIÈCLE &bull; 1709",
+                    edition: "Tome II. À Paris, chez Jean-Baptiste Delespine (1709)",
+                    coverImage: "https://lh3.googleusercontent.com/d/1e9ogtBvrtr2MZwRKYb2NqkrYzDuRHdF5",
+                    pages: [
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1e9ogtBvrtr2MZwRKYb2NqkrYzDuRHdF5",
+                            caption: "Page de titre & provenances de Compiègne",
+                            notice: "Une page de titre typographique parisienne de 1709, parue chez Jean-Baptiste Delespine pour le deuxième tome des Souffrances de Nostre-Seigneur Jesus-Christ, se pare d'un élégant fleuron central et de multiples annotations manuscrites anciennes attestant ses diverses provenances monastiques à Compiègne."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1QlXsZnrgSDEqrUMy2QNJ6Z7aQv1NqWB6",
+                            caption: "Feuillet intérieur & lettrine",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1QMQCCpWtagq_Mj9RiFYOQ7jzAb7UYdlv",
+                            caption: "Bandeau & cul-de-lampe d'ornement",
+                            notice: ""
+                        }
+                    ]
+                },
+                {
+                    id: "bourdaloue-avent-1716",
+                    year: 1716,
+                    title: "Sermons du Père Bourdaloue, pour l'Avent",
+                    author: "Par le Père Louis Bourdaloue, de la Compagnie de Jésus",
+                    centuryLabel: "XVIIIe SIÈCLE &bull; 1716",
+                    edition: "À Paris, aux dépens de Rigaud, Directeur de l'Imprimerie Royale (1716)",
+                    coverImage: "https://lh3.googleusercontent.com/d/18n-pbZvPJClR6sPF-1uctDyqOT8HbRkO",
+                    pages: [
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/18n-pbZvPJClR6sPF-1uctDyqOT8HbRkO",
+                            caption: "Page de titre & fleuron Rigaud",
+                            notice: "Publiée à Paris en 1716 aux dépens de Rigaud, directeur de l'Imprimerie Royale, cette page de titre des Sermons du Père Bourdaloue, pour l'Avent présente une typographie soignée et élégante rythmée par un délicat fleuron central."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1pu0nzsvEjdcROwbDmSsgJELpR4dPQcCR",
+                            caption: "Bandeau aux cassolettes fumantes (Toussaint)",
+                            notice: "Un bandeau typographique gravé sur bois, encadré d'un fin filet et flanqué de cassolettes fumantes et d'attributs allégoriques, surplombe le titre solennel « SERMON POUR LA FESTE DE TOUS LES SAINTS »."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1-3HB3RiwNjCbX2YfFoIoDDIOS_i3r1Fh",
+                            caption: "Fleuron typographique",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1UO-C040XrQh_6eZ6qumte4xiFwyHzDGm",
+                            caption: "Bandeau d'en-tête & lettrine",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1tEiuYtQ9F0DBEsvLWCISYpKbiyZ4hdbG",
+                            caption: "Cul-de-lampe gravé",
+                            notice: ""
+                        }
+                    ]
+                },
+                {
+                    id: "lettres-spirituelles-1721",
+                    year: 1721,
+                    title: "Recueil de lettres spirituelles sur divers sujets",
+                    author: "Sur divers sujets de morale et de piété",
+                    centuryLabel: "XVIIIe SIÈCLE &bull; 1721",
+                    edition: "Tome I. À Paris, chez François Barois, rue de la Harpe, à la Ville de Nevers (1721)",
+                    coverImage: "https://lh3.googleusercontent.com/d/1W5M9ZImpoJXJfHD03UfQ_8YEVp5lbz8j",
+                    pages: [
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1W5M9ZImpoJXJfHD03UfQ_8YEVp5lbz8j",
+                            caption: "Page de titre & fleuron rocaille",
+                            notice: "Parue à Paris en 1721 chez François Barois (libraire rue de la Harpe, à la Ville de Nevers), cette page de titre du premier tome du Recueil de lettres spirituelles sur divers sujets de morale et de piété arbore une belle composition typographique centrale agrémentée d'un fleuron ornemental rocaille."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1TjnH-4LsRxvhgRapBqHaa66ACWUwxpJ8",
+                            caption: "Bandeau & lettrine (J) aux Ecclésiastiques",
+                            notice: "Couronné par un délicat bandeau typographique gravé sur bois et introduit par une élégante lettrine « J » encadrée, le début du chapitre des « Lettres à un Ecclésiastique » s'ouvre sur des caractères de plomb affirmés qui structurent l'ouvrage."
+                        }
+                    ]
+                },
+                {
+                    id: "instruction-sacremens-1722",
+                    year: 1722,
+                    title: "Instruction sur les dispositions aux Sacremens",
+                    author: "De Penitence et d'Eucharistie",
+                    centuryLabel: "XVIIIe SIÈCLE &bull; 1722",
+                    edition: "À Paris, chez Guillaume Desprez & Jean Desessartz (1722)",
+                    coverImage: "https://lh3.googleusercontent.com/d/1MivfqwcHzAlD2i8A-DwRO8r3tUEvjeQC",
+                    pages: [
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1MivfqwcHzAlD2i8A-DwRO8r3tUEvjeQC",
+                            caption: "Page de titre & Signature Jainsigny d'Effiat",
+                            notice: "Publiée à Paris en 1722 conjointement chez Guillaume Desprez et Jean Desessartz, cette page de titre de l'Instruction sur les dispositions qu'on doit apporter aux sacremens de penitence et d'eucharistie présente une typographie rigoureuse rythmée par une croix latine centrale et encadrée par de superbes signatures autographes anciennes de la main de Jainsigny d'Effiat. Le nom inscrit sur cette page de garde renvoie à la maison d'Effiat, liée aux marquis d'Effiat (dont le plus illustre représentant est Antoine Coëffier de Ruzé d'Effiat, maréchal de France et surintendant des finances au XVIIe siècle, ou sa descendante la famille de Ruzé d'Effiat). La mention autographe « Jainsigny d'Effiat » témoigne de l'appartenance de cet ouvrage pieux à un membre de cette lignée aristocratique au XVIIIe siècle."
+                        },
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1qipGKJGjAKaOeiElFvpOlaSVRyeUk_cO",
+                            caption: "Jean le Baptiste prêchant la pénitence au désert",
+                            notice: "Jean le Baptiste prêche la pénitence et rassemble les foules au désert pour préparer les fidèles aux dispositions spirituelles requises avant de recevoir les sacrements."
+                        },
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1RBJpT3mDVJOh7lRZoQH6MNYvgjNIrHcY",
+                            caption: "Anges en adoration devant l'Eucharistie",
+                            notice: "Des anges en adoration s'inclinent au milieu des nuées célestes pour contempler l'hostie rayonnante marquée de la croix, qui illustre le mystère de l'Eucharistie et la ferveur des esprits bienheureux."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1YtQfRKvOVuECVspRU7QQsJl1QtUS-GjD",
+                            caption: "Bandeau au médaillon soutenu par des amours",
+                            notice: "Un somptueux bandeau gravé sur bois met en scène un médaillon central rayonnant soutenu par des amours et entouré de rinceaux feuillagés, surplombant l'ouverture de la seconde partie consacrée aux dispositions face aux péchés véniels."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/18Uv1WCe1KhppVHRI69RDTuy31OrogVa0",
+                            caption: "Bandeau au calice rayonnant (Partie III)",
+                            notice: "Encadré par un fin liseré rectangulaire, un bandeau typographique gravé sur bois met en valeur un médaillon central rayonnant abritant un calice, flanqué de rinceaux feuillagés pour introduire la troisième partie de l'ouvrage."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1dIsFntxpYiOQwK0S_A17-7E7scj9jBtf",
+                            caption: "Feuillet de texte & composition",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1xHDnvPg5roy5hfRGZHamHqdbLfnrqa90",
+                            caption: "Ornement & lettrine",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1iiCPd34rmLSxvXsHigMHZsucRnAkqHS2",
+                            caption: "Bandeau typographique",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1TRbekZHPVAn53dfj8Pxq63zMwltXbGfE",
+                            caption: "Cul-de-lampe d'ornement",
+                            notice: ""
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/1d2xijKe7ZKkwV2HTS1po2bR8Ep0RsiUW",
+                            caption: "Mention manuscrite de possession",
+                            notice: ""
+                        }
+                    ]
+                },
+                {
+                    id: "belles-lettres-rollin-1736",
+                    year: 1736,
+                    title: "Manière d'enseigner les Belles-Lettres (Tome IV)",
+                    author: "Par Charles Rollin, Recteur de l'Université de Paris",
+                    centuryLabel: "XVIIIe SIÈCLE &bull; 1736",
+                    edition: "Tome IV. À Paris, chez la Veuve Estienne, rue Saint-Jacques, à la Vertu (1736)",
+                    coverImage: "https://lh3.googleusercontent.com/d/1jepNfSdhu4bTOxN3WUQEGidXfj6tf54o",
+                    pages: [
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1jepNfSdhu4bTOxN3WUQEGidXfj6tf54o",
+                            caption: "Page de titre & signature manuscrite ancienne",
+                            notice: "Parue à Paris en 1736 chez la veuve Estienne (rue Saint-Jacques, à la Vertu) pour le quatrième tome de la célèbre Manière d'enseigner et d'étudier les belles lettres de Charles Rollin, cette page de titre typographique se compose avec rigueur et intègre une signature manuscrite ancienne au-dessus des adresses d'édition."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1VYCWM2oon-YatMG_jqtqWF7JWruo7nsV",
+                            caption: "Feuillet intérieur & lettrine",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1knM4BXdcawsXAnDiNlq87ZtlEBnpUF2p",
+                            caption: "Bandeau typographique gravé",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1p0xWqQe6dGrwQDa5TV4pV3EIfUAJAeqz",
+                            caption: "Cul-de-lampe ornemental",
+                            notice: ""
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/1uZXkwrBcwlmzPsx8aDf5HShKSi5pR_r_",
+                            caption: "Garde & annotations",
+                            notice: ""
+                        }
+                    ]
+                },
+                {
+                    id: "oraisons-funebres-flechier-1744",
+                    year: 1744,
+                    title: "Recueil des oraisons funèbres",
+                    author: "Par Messire Esprit Fléchier, Évêque de Nismes",
+                    centuryLabel: "XVIIIe SIÈCLE &bull; 1744",
+                    edition: "À Paris, chez Jean Desaint, rue S. Jean de Beauvais (1744)",
+                    coverImage: "https://lh3.googleusercontent.com/d/1xmmzmkps0XrZvuNt6JRj9dRT1CKOjZpl",
+                    pages: [
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1xmmzmkps0XrZvuNt6JRj9dRT1CKOjZpl",
+                            caption: "Page de titre & fleuron urne-feuillage",
+                            notice: "Parue à Paris en 1744 chez Jean Desaint (libraire rue S. Jean de Beauvais), cette page de titre du Recueil des oraisons funèbres prononcées par Messire Esprit Fléchier s'orne d'une élégante composition typographique centrale dominée par un fleuron urne-feuillage."
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/1_1dTrtWWFWXnThZnysPtHmFHio1vAcz6",
+                            caption: "Garde aux tampons & anneaux entrelacés",
+                            notice: "Une page de garde maculée de multiples empreintes violettes et rouges de tampons elliptiques répétant un motif d'anneaux entrelacés ou de sceaux superposés témoigne d'une marque de possession obsessionnelle ou d'un réemploi répété de cachets héraldiques au sein de l'ouvrage."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/14c-FMM8xZ9ygzmBt8Q8RIROq2qM-MgUm",
+                            caption: "Bandeau aux cornes d'abondance & fleurs",
+                            notice: "Encadré par un double filet rectangulaire, un somptueux bandeau typographique gravé sur bois met en scène deux cornes d'abondance croisées et débordant de fleurs et de feuillages, nouées par un ruban flottant pour couronner l'introduction d'une nouvelle oraison funèbre."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1OTS763652jNofumyTuaft9zfxIxuRsjN",
+                            caption: "Feuillet de discours",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1ZTjRtHcFeBEygaEdGa-saA58kcExsYix",
+                            caption: "Bandeau d'en-tête",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1ztnmW3pZ8r44SjLS0VBuhCQYmh-7bJ-I",
+                            caption: "Lettrine ornée",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1vYB3yIH5y6BICjwgut_yuLXVj-iMib6u",
+                            caption: "Cul-de-lampe gravé",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1K_5dGLl3FzcNSk0j7EiU9xCGdycTVs4y",
+                            caption: "Composition typographique",
+                            notice: ""
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/1cSEtjh8bK9EpZ-bClbJhHFy2R1KXr32R",
+                            caption: "Reliure / Garde",
+                            notice: ""
                         }
                     ]
                 }
@@ -657,7 +940,7 @@
 
             renderCategorizedThumbnails(book);
 
-            // Règle d'or : Toujours afficher la première image (page de titre) par défaut
+            // Toujours afficher l'image 1 (page de titre) par défaut
             selectPage(0);
         }
 
@@ -674,7 +957,7 @@
             sectionsConfig.forEach(section => {
                 const items = [];
                 book.pages.forEach((page, originalIdx) => {
-                    const cat = page.category || 'gravures';
+                    const cat = page.category || 'ornements';
                     if (cat === section.key) {
                         items.push({ page, originalIdx });
                     }
@@ -751,6 +1034,22 @@
                     }
                 }
             });
+
+            // 6. Mise à jour de l'état des boutons Précédent / Suivant
+            document.getElementById('btn-nav-prev').disabled = (index === 0);
+            document.getElementById('btn-nav-next').disabled = (index === currentBook.pages.length - 1);
+        }
+
+        function prevPage() {
+            if (currentBook && currentPageIndex > 0) {
+                selectPage(currentPageIndex - 1);
+            }
+        }
+
+        function nextPage() {
+            if (currentBook && currentPageIndex < currentBook.pages.length - 1) {
+                selectPage(currentPageIndex + 1);
+            }
         }
 
         function backToGallery() {
@@ -770,6 +1069,7 @@
             document.getElementById('modal-fullscreen').classList.add('hidden');
         }
 
+        // Navigation Clavier
         document.addEventListener('keydown', (e) => {
             const modal = document.getElementById('modal-fullscreen');
             if (!modal.classList.contains('hidden')) {
@@ -779,13 +1079,9 @@
 
             if (!viewBookDetail.classList.contains('hidden') && currentBook) {
                 if (e.key === 'ArrowRight') {
-                    if (currentPageIndex < currentBook.pages.length - 1) {
-                        selectPage(currentPageIndex + 1);
-                    }
+                    nextPage();
                 } else if (e.key === 'ArrowLeft') {
-                    if (currentPageIndex > 0) {
-                        selectPage(currentPageIndex - 1);
-                    }
+                    prevPage();
                 } else if (e.key === 'Escape') {
                     backToGallery();
                 }
