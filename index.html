@@ -158,52 +158,48 @@
                 </div>
             </div>
 
-            <!-- PARTIE DROITE (50% de largeur) : 50% Haut (Notice) / 50% Bas (Vignettes séparées en 3 sections) -->
+            <!-- PARTIE DROITE (50% de largeur) : 1/3 Haut (Notice) / 2/3 Bas (Grille des vignettes sans vide) -->
             <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-[#0b0d12]">
                 
-                <!-- MOITIÉ SUPÉRIEURE : En-tête + Notice descriptive avec ascenseur -->
-                <div class="h-1/2 flex flex-col p-6 sm:p-8 border-b border-payne-border/80 overflow-hidden">
-                    <div class="flex-none pb-3 border-b border-payne-border/50">
-                        <div class="flex items-center justify-between mb-1.5">
+                <!-- 1/3 HAUT (environ 35% de la hauteur) : En-tête + Notice avec ascenseur -->
+                <div class="h-[35%] flex flex-col p-5 sm:p-6 border-b border-payne-border/80 overflow-hidden">
+                    <div class="flex-none pb-2 border-b border-payne-border/50">
+                        <div class="flex items-center justify-between mb-1">
                             <div class="flex items-center gap-2">
-                                <span id="detail-century" class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">SIÈCLE</span>
-                                <span id="detail-age-pill" class="text-[10px] font-cinzel bg-gold/15 text-gold px-2 py-0.5 rounded border border-gold/40">ÂGE</span>
+                                <span id="detail-century" class="font-cinzel text-[11px] tracking-[0.25em] text-gold uppercase">SIÈCLE</span>
+                                <span id="detail-age-pill" class="text-[9px] font-cinzel bg-gold/15 text-gold px-1.5 py-0.5 rounded border border-gold/40">ÂGE</span>
                             </div>
-                            <button onclick="backToGallery()" class="text-[11px] font-cinzel tracking-widest text-neutral-400 hover:text-gold uppercase transition flex items-center gap-1">
+                            <button onclick="backToGallery()" class="text-[10px] font-cinzel tracking-widest text-neutral-400 hover:text-gold uppercase transition flex items-center gap-1">
                                 &larr; Revenir aux livres
                             </button>
                         </div>
-                        <h2 id="detail-title" class="font-cinzel text-xl sm:text-2xl text-neutral-100 font-semibold tracking-wide leading-tight mb-1">
+                        <h2 id="detail-title" class="font-cinzel text-lg sm:text-xl text-neutral-100 font-semibold tracking-wide leading-tight truncate">
                             Titre de l'ouvrage
                         </h2>
-                        <p id="detail-author" class="font-garamond italic text-base sm:text-lg text-neutral-300">
+                        <p id="detail-author" class="font-garamond italic text-sm text-neutral-300 truncate">
                             Auteur
-                        </p>
-                        <p id="detail-edition" class="text-[11px] font-cinzel text-neutral-400 tracking-wider mt-0.5">
-                            Détails d'édition
                         </p>
                     </div>
 
-                    <div class="flex-1 mt-3 overflow-y-auto pr-3 custom-scroll">
-                        <div class="flex items-center gap-2 mb-1.5 sticky top-0 bg-[#0b0d12]/95 py-0.5 z-10">
+                    <div class="flex-1 mt-2 overflow-y-auto pr-2 custom-scroll">
+                        <div class="flex items-center gap-2 mb-1 sticky top-0 bg-[#0b0d12]/95 py-0.5 z-10">
                             <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
-                            <h4 id="detail-desc-heading" class="font-cinzel text-xs uppercase tracking-widest text-gold/90">Notice & Présentation</h4>
+                            <h4 id="detail-desc-heading" class="font-cinzel text-[11px] uppercase tracking-widest text-gold/90">Notice & Présentation</h4>
                         </div>
-                        <div id="detail-description-content" class="text-neutral-300 text-sm sm:text-base leading-relaxed font-light font-garamond space-y-2">
+                        <div id="detail-description-content" class="text-neutral-300 text-xs sm:text-sm leading-relaxed font-light font-garamond space-y-1.5">
                         </div>
                     </div>
                 </div>
 
-                <!-- MOITIÉ INFÉRIEURE : VIGNETTES CLASSÉES EN 3 SECTIONS PHYSIQUES (3 DE LARGE) -->
-                <div class="h-1/2 flex flex-col p-5 sm:p-6 bg-[#090b0f] overflow-hidden">
-                    <div class="flex items-center justify-between pb-2.5 flex-none border-b border-payne-border/40">
+                <!-- 2/3 BAS (environ 65% de la hauteur) : VIGNETTES EN 3 SECTIONS PHYSIQUES (3 DE LARGE) -->
+                <div class="h-[65%] flex flex-col p-4 sm:p-6 bg-[#090b0f] overflow-hidden">
+                    <div class="flex items-center justify-between pb-2 flex-none border-b border-payne-border/40">
                         <span class="font-cinzel text-xs tracking-widest text-neutral-300 uppercase font-semibold">Planches, Ornements & Ex-libris</span>
-                        <span id="mini-counter" class="text-xs font-cinzel text-gold font-medium bg-payne-base px-2.5 py-0.5 rounded border border-payne-border">1 / 1</span>
+                        <span id="mini-counter" class="text-xs font-cinzel text-gold font-medium bg-payne-base px-2 py-0.5 rounded border border-payne-border">1 / 1</span>
                     </div>
                     
-                    <!-- Conteneur d'ascenseur pour les 3 sections -->
-                    <div id="detail-sections-container" class="flex-1 overflow-y-auto custom-scroll pr-1.5 pt-2 space-y-5">
-                        <!-- Sections et grilles injectées par JS -->
+                    <div id="detail-sections-container" class="flex-1 overflow-y-auto custom-scroll pr-1.5 pt-2 space-y-4">
+                        <!-- Sections et grilles générées par JavaScript -->
                     </div>
                 </div>
 
@@ -222,9 +218,9 @@
 
     <!-- SCRIPT DE GESTION -->
     <script>
-        const CURRENT_YEAR = 2026;
+        // Année calculée en temps réel (2026, 2027, etc.)
+        const CURRENT_YEAR = new Date().getFullYear();
 
-        // CATALOGUE DES OUVRAGES PAR SIÈCLE
         const catalog = {
             XVII: [
                 {
@@ -437,9 +433,9 @@
             ],
             XVIII: [
                 {
-                    id: "homelies-careme-1706",
+                    id: "homelies-careme-t8-1706",
                     year: 1706,
-                    title: "Homélies sur les évangiles de tous les jours de carême",
+                    title: "Homélies sur les évangiles (Tome VIII)",
                     author: "Par M. de Monmorel, Abbé de Lannoy, Aumônier de Madame la Duchesse de Bourgogne",
                     centuryLabel: "XVIIIe SIÈCLE &bull; 1706",
                     edition: "Tome VIII. À Paris, chez Denis Mariette, rue S. Jacques, à Saint Augustin (1706)",
@@ -476,12 +472,88 @@
                             notice: "Tracée à l'encre brune d'une belle écriture cursive ancienne, une inscription de possession « Ce livre appartient à moi marie Louise Lacroix de batz » déploie ses larges boucles calligraphiques et ses paraphes décoratifs sur une garde ou une page de papier vergé."
                         }
                     ]
+                },
+                {
+                    id: "homelies-careme-t10-1706",
+                    year: 1706,
+                    title: "Homélies sur les évangiles (Tome X)",
+                    author: "Par M. de Monmorel, Abbé de Lannoy",
+                    centuryLabel: "XVIIIe SIÈCLE &bull; 1706",
+                    edition: "Tome X. À Paris, chez Denis Mariette, rue S. Jacques, à Saint Augustin (1706)",
+                    coverImage: "https://lh3.googleusercontent.com/d/1W7OtpwBsIMWUAjj75ksTjzJQCZ9T140R",
+                    pages: [
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1W7OtpwBsIMWUAjj75ksTjzJQCZ9T140R",
+                            caption: "Page de titre typographique & croix latine",
+                            notice: "Une page de titre typographique datée de 1706 pour le dixième tome des Homelies sur les evangiles de tous les jours de carême de l'abbé de Monmorel, imprimées à Paris chez Denis Mariette, se distingue par une belle composition de caractères de plomb encadrée d'une croix latine et enrichie de signatures manuscrites anciennes dans la partie centrale."
+                        },
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1lYT1Inx4J391NiUoFOcTWVXK8Fd6ejJO",
+                            caption: "Le fils de la veuve de Naïm ressuscité",
+                            notice: "Une vignette gravée en tête de texte représente la scène du fils de la veuve de Naïm ressuscité par le Christ, montrant un cortège funèbre interrompu au milieu d'une architecture antique et de figures ébahies."
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/1r02sOLmVkTiu7PyNYRMS3J8-Cf__qjb1",
+                            caption: "Mise en garde manuscrite Hervé La Croix du Bourd",
+                            notice: "Tracée à l'encre noire d'une belle écriture cursive appliquée, une note de mise en garde et de possession s'affiche sur la page de garde : « ceux ou celle qui trouveront cete homelies seront obliger de la rendre à moi hervé la croix du bourd »."
+                        }
+                    ]
+                },
+                {
+                    id: "souffrances-jesus-christ-1709",
+                    year: 1709,
+                    title: "Les Souffrances de Nostre-Seigneur Jesus-Christ",
+                    author: "Traduit du portugais par le Père Alleaume",
+                    centuryLabel: "XVIIIe SIÈCLE &bull; 1709",
+                    edition: "Tome I. À Paris, chez Jean-Baptiste Delespine (1709)",
+                    coverImage: "https://lh3.googleusercontent.com/d/1t3o5q0EyD78uf7gvcT2KQGhkzgEwrA0C",
+                    pages: [
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1t3o5q0EyD78uf7gvcT2KQGhkzgEwrA0C",
+                            caption: "Page de titre typographique (1709)",
+                            notice: "Imprimée à Paris en 1709 chez Jean-Baptiste Delespine pour le premier tome des Souffrances de Nostre-Seigneur Jesus-Christ (traduit du portugais par le père Alleaume), cette page de titre typographique arbore une composition soignée de caractères de plomb agrémentée d'un élégant fleuron ornemental central."
+                        },
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/11fLy-yPAkyNIVAxKZGO_2FForfomiU72",
+                            caption: "Cartouche rocaille au soleil levant / ostensoir",
+                            notice: "Une composition gravée sur bois de style rocaille met en scène un cartouche architecturé surmonté d'un dais fleuri et flanqué de branches feuillagées, abritant un motif rayonnant rappelant un soleil levant ou un ostensoir."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/11fRs7q35fy1K8Lkm77pCqCF-rzj3Myom",
+                            caption: "Bandeau gravé à fleurs & rinceaux",
+                            notice: "Encadré dans un fin liseré rectangulaire, un somptueux bandeau typographique gravé sur bois déploie des rinceaux feuillagés d'une grande finesse et des fleurs épanouies pour couronner le titre de l'ouvrage."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/12T594Bod3tApdRs0dd32-FqL6hfyE9TM",
+                            caption: "Bandeau typographique gravé",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/12N9NzNE8aAXyRm6j11MX4qZ5yOwf1FbM",
+                            caption: "Bandeau d'ornement & lettrine",
+                            notice: ""
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/12LjOKcEUxg1BRaQ2Bd6DVqy8gbrgnKSH",
+                            caption: "Provenance Monastère Visitation Sainte-Marie d'Amiens",
+                            notice: "Tracée d'une main sûre à l'encre brune sur la page de garde, une écriture cursive ancienne consigne la provenance monastique de l'exemplaire : « ce livre est du Monastère de la Visitation Sainte Marie d'Amiens », complétée d'une petite croix tracée en contrebas."
+                        }
+                    ]
                 }
             ],
             XIX: []
         };
 
-        // Tri automatique chronologique
+        // Tri chronologique automatique
         Object.keys(catalog).forEach(century => {
             catalog[century].sort((a, b) => a.year - b.year);
         });
@@ -572,7 +644,6 @@
 
         function openBook(book) {
             currentBook = book;
-            currentPageIndex = 0;
             hideAllViews();
             viewBookDetail.classList.remove('hidden');
 
@@ -583,13 +654,13 @@
             document.getElementById('detail-image-badge-age').innerText = `${bookAge} ANS`;
             document.getElementById('detail-title').innerText = book.title;
             document.getElementById('detail-author').innerText = book.author;
-            document.getElementById('detail-edition').innerText = book.edition;
 
             renderCategorizedThumbnails(book);
+
+            // Règle d'or : Toujours afficher la première image (page de titre) par défaut
             selectPage(0);
         }
 
-        // RENDU DES 3 SECTIONS DE MINIATURES
         function renderCategorizedThumbnails(book) {
             const container = document.getElementById('detail-sections-container');
             container.innerHTML = '';
@@ -597,11 +668,10 @@
             const sectionsConfig = [
                 { key: 'gravures', title: 'I. Gravures & Planches illustrées' },
                 { key: 'ornements', title: 'II. Ornements typographiques & Lettrines' },
-                { key: 'exlibris', title: 'III. Ex-libris, Reliures & Particularités' }
+                { key: 'exlibris', title: 'III. Ex-libris, Reliures & Provenances' }
             ];
 
             sectionsConfig.forEach(section => {
-                // Trouver les items de cette section en gardant leur index d'origine dans book.pages
                 const items = [];
                 book.pages.forEach((page, originalIdx) => {
                     const cat = page.category || 'gravures';
@@ -612,7 +682,7 @@
 
                 if (items.length > 0) {
                     const sectionWrapper = document.createElement('div');
-                    sectionWrapper.className = "space-y-2";
+                    sectionWrapper.className = "space-y-1.5";
 
                     sectionWrapper.innerHTML = `
                         <div class="flex items-center gap-2 border-b border-payne-border/60 pb-1">
@@ -620,13 +690,13 @@
                             <h5 class="font-cinzel text-[11px] uppercase tracking-widest text-gold/90 font-medium">${section.title}</h5>
                             <span class="text-[10px] text-neutral-500 font-cinzel ml-auto">(${items.length})</span>
                         </div>
-                        <div class="grid grid-cols-3 gap-3">
+                        <div class="grid grid-cols-3 gap-2.5">
                             ${items.map(item => `
                                 <button id="thumb-${item.originalIdx}" onclick="selectPage(${item.originalIdx})" class="group flex flex-col p-1.5 rounded border text-left transition-all duration-200 focus:outline-none border-payne-border/80 bg-black/40 hover:border-gold/50 hover:bg-payne-base/30">
                                     <div class="aspect-[3/4] w-full overflow-hidden bg-black/80 rounded-xs flex items-center justify-center border border-payne-border/40 group-hover:border-gold/40">
                                         <img src="${item.page.url}" alt="${item.page.caption}" class="w-full h-full object-cover">
                                     </div>
-                                    <span class="block text-[10px] font-cinzel text-neutral-300 group-hover:text-gold truncate mt-1 tracking-wider">
+                                    <span class="block text-[9px] font-cinzel text-neutral-300 group-hover:text-gold truncate mt-1 tracking-wider">
                                         ${item.originalIdx + 1}.${item.page.caption}
                                     </span>
                                 </button>
@@ -652,7 +722,7 @@
                 mainImg.classList.remove('opacity-0');
             }, 140);
 
-            // 2. Légende
+            // 2. Légende sous image
             document.getElementById('detail-image-legend').innerText = page.caption;
 
             // 3. Notice descriptive
