@@ -37,7 +37,6 @@
         }
     </script>
     <style>
-        /* Défilement discret personnalisé */
         .custom-scroll::-webkit-scrollbar {
             width: 5px;
             height: 5px;
@@ -54,7 +53,6 @@
             background: #c5a880;
         }
 
-        /* Halo pulsant pour les boutons de siècle */
         @keyframes pulse-halo {
             0%, 100% {
                 box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.35);
@@ -78,7 +76,6 @@
 
     <!-- BANDEAU SUPÉRIEUR MUSÉAL -->
     <header class="h-16 flex-none bg-[#0c0e13]/95 border-b border-payne-border/60 px-6 sm:px-10 flex items-center justify-between z-30 shadow-2xl backdrop-blur-md">
-        <!-- Logo / Titre Retour Accueil -->
         <button onclick="showHome()" class="flex items-center gap-3 group text-left transition focus:outline-none">
             <span class="w-2.5 h-2.5 rounded-full bg-gold/80 group-hover:scale-125 transition-transform"></span>
             <div>
@@ -87,7 +84,6 @@
             </div>
         </button>
 
-        <!-- Sélecteur de Siècles Pulsant -->
         <nav class="flex items-center gap-3 sm:gap-4">
             <button onclick="showCentury('XVII')" id="btn-XVII" class="century-btn-pulse px-3.5 sm:px-4 py-1.5 rounded border border-gold/40 bg-payne-base/80 hover:bg-payne-light hover:border-gold text-gold font-cinzel text-xs tracking-wider transition-all duration-300 transform active:scale-95">
                 XVII<sup class="text-[9px]">e</sup>
@@ -146,34 +142,32 @@
         <!-- 3. VUE FICHE LIVRE (50% GAUCHE / 50% DROITE) -->
         <section id="view-book-detail" class="absolute inset-0 z-10 hidden flex flex-col md:flex-row bg-[#08090b]">
             
-            <!-- PARTIE GAUCHE (50% de largeur) : Grande image HD avec mode plein écran -->
+            <!-- PARTIE GAUCHE (50% de largeur) : Grande image HD -->
             <div class="w-full md:w-1/2 h-1/2 md:h-full relative bg-[#050608] border-b md:border-b-0 md:border-r border-payne-border flex items-center justify-center p-4 sm:p-8 overflow-hidden group">
                 <div class="relative w-full h-full flex items-center justify-center">
                     <img id="detail-main-image" src="" alt="Vue de l'ouvrage" class="max-w-full max-h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.95)] transition-all duration-300 rounded-sm">
                 </div>
 
-                <!-- Bouton loupe / plein écran -->
                 <button onclick="openModalFullscreen()" title="Agrandir en plein écran" class="absolute top-4 right-4 bg-obsidian/80 hover:bg-payne-light border border-payne-border/80 hover:border-gold text-gold p-2 rounded transition-all opacity-0 group-hover:opacity-100 focus:outline-none">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
                 </button>
 
-                <!-- Légende sous image avec âge du livre -->
                 <div class="absolute bottom-3 left-6 right-6 flex items-center justify-between text-[11px] text-neutral-400 font-cinzel bg-obsidian/90 py-1.5 px-3 border border-payne-border/60 backdrop-blur-sm">
                     <span id="detail-image-legend" class="truncate pr-3">Page de titre</span>
-                    <span id="detail-image-badge-age" class="text-gold tracking-widest flex-none">399 ANS</span>
+                    <span id="detail-image-badge-age" class="text-gold tracking-widest flex-none">ÂGE</span>
                 </div>
             </div>
 
-            <!-- PARTIE DROITE (50% de largeur) : 50% Haut (Notice) / 50% Bas (Grille de 3 colonnes avec ascenseur) -->
+            <!-- PARTIE DROITE (50% de largeur) : 50% Haut (Notice) / 50% Bas (Vignettes séparées en 3 sections) -->
             <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-[#0b0d12]">
                 
-                <!-- MOITIÉ SUPÉRIEURE : En-tête + Notice textuelle avec ascenseur -->
+                <!-- MOITIÉ SUPÉRIEURE : En-tête + Notice descriptive avec ascenseur -->
                 <div class="h-1/2 flex flex-col p-6 sm:p-8 border-b border-payne-border/80 overflow-hidden">
                     <div class="flex-none pb-3 border-b border-payne-border/50">
                         <div class="flex items-center justify-between mb-1.5">
                             <div class="flex items-center gap-2">
-                                <span id="detail-century" class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">XVIIe SIÈCLE</span>
-                                <span id="detail-age-pill" class="text-[10px] font-cinzel bg-gold/15 text-gold px-2 py-0.5 rounded border border-gold/40">399 ans</span>
+                                <span id="detail-century" class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">SIÈCLE</span>
+                                <span id="detail-age-pill" class="text-[10px] font-cinzel bg-gold/15 text-gold px-2 py-0.5 rounded border border-gold/40">ÂGE</span>
                             </div>
                             <button onclick="backToGallery()" class="text-[11px] font-cinzel tracking-widest text-neutral-400 hover:text-gold uppercase transition flex items-center gap-1">
                                 &larr; Revenir aux livres
@@ -190,7 +184,6 @@
                         </p>
                     </div>
 
-                    <!-- Notice descriptive -->
                     <div class="flex-1 mt-3 overflow-y-auto pr-3 custom-scroll">
                         <div class="flex items-center gap-2 mb-1.5 sticky top-0 bg-[#0b0d12]/95 py-0.5 z-10">
                             <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
@@ -201,19 +194,16 @@
                     </div>
                 </div>
 
-                <!-- MOITIÉ INFÉRIEURE : GRILLE DE 3 MINIATURES DE LARGE AVEC ASCENSEUR -->
+                <!-- MOITIÉ INFÉRIEURE : VIGNETTES CLASSÉES EN 3 SECTIONS PHYSIQUES (3 DE LARGE) -->
                 <div class="h-1/2 flex flex-col p-5 sm:p-6 bg-[#090b0f] overflow-hidden">
-                    <div class="flex items-center justify-between pb-3 flex-none border-b border-payne-border/40">
-                        <div class="flex items-center gap-2">
-                            <span class="font-cinzel text-xs tracking-widest text-neutral-300 uppercase font-semibold">Planches & Feuillets</span>
-                            <span class="text-[11px] font-garamond italic text-neutral-500 hidden sm:inline">(Navigation au clavier : &larr; &rarr;)</span>
-                        </div>
-                        <span id="mini-counter" class="text-xs font-cinzel text-gold font-medium bg-payne-base px-2.5 py-0.5 rounded border border-payne-border">1 / 10</span>
+                    <div class="flex items-center justify-between pb-2.5 flex-none border-b border-payne-border/40">
+                        <span class="font-cinzel text-xs tracking-widest text-neutral-300 uppercase font-semibold">Planches, Ornements & Ex-libris</span>
+                        <span id="mini-counter" class="text-xs font-cinzel text-gold font-medium bg-payne-base px-2.5 py-0.5 rounded border border-payne-border">1 / 1</span>
                     </div>
                     
-                    <div class="flex-1 overflow-y-auto custom-scroll pr-1.5 pt-3">
-                        <div id="detail-thumbnails-grid" class="grid grid-cols-3 gap-3.5 pb-4">
-                        </div>
+                    <!-- Conteneur d'ascenseur pour les 3 sections -->
+                    <div id="detail-sections-container" class="flex-1 overflow-y-auto custom-scroll pr-1.5 pt-2 space-y-5">
+                        <!-- Sections et grilles injectées par JS -->
                     </div>
                 </div>
 
@@ -223,10 +213,10 @@
 
     </main>
 
-    <!-- MODAL PLEIN ÉCRAN POUR CONTEMPLER L'IMAGE EN GRAND -->
+    <!-- MODAL PLEIN ÉCRAN -->
     <div id="modal-fullscreen" class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-6 cursor-zoom-out" onclick="closeModalFullscreen()">
         <img id="modal-fullscreen-img" src="" alt="Vue haute résolution" class="max-w-full max-h-[90vh] object-contain drop-shadow-2xl">
-        <p id="modal-fullscreen-legend" class="font-cinzel text-xs text-neutral-300 mt-4 tracking-wider"></p>
+        <p id="modal-fullscreen-legend" class="font-cinzel text-xs text-neutral-300 mt-4 tracking-wider text-center"></p>
         <span class="text-[10px] text-neutral-500 font-cinzel mt-1">Cliquez n'importe où ou appuyez sur Échap pour fermer</span>
     </div>
 
@@ -234,6 +224,7 @@
     <script>
         const CURRENT_YEAR = 2026;
 
+        // CATALOGUE DES OUVRAGES PAR SIÈCLE
         const catalog = {
             XVII: [
                 {
@@ -246,54 +237,64 @@
                     coverImage: "https://lh3.googleusercontent.com/d/1LM2H37Aw37c-JwwgmjeaKPgABwGsKorn",
                     pages: [
                         {
+                            category: "gravures",
                             url: "https://lh3.googleusercontent.com/d/1LM2H37Aw37c-JwwgmjeaKPgABwGsKorn",
-                            caption: "Page de titre (1627)",
+                            caption: "Page de titre & vignette IHS (1627)",
                             notice: "Cette page de titre gravée d'une édition lyonnaise de 1627 présente, sous un petit fleuron floral de rinceaux, une superbe vignette centrale ovale affichant le monogramme IHS surmonté d'une croix et d'un cœur enflammé, le tout cerné par une éclatante couronne de rayons flamboyants et de motifs guillochés, tandis qu'un gracieux ornement typographique souligne le nom de la ville."
                         },
                         {
-                            url: "https://lh3.googleusercontent.com/d/1Ppi6agE3jv18ScbE_XKCOMmbQiza4T0q",
-                            caption: "Reliure d'époque",
-                            notice: "Reliure d'époque en plein cuir avec dos orné de nerfs et filets dorés, témoin du travail soigné des ateliers de reliure du premier tiers du XVIIe siècle."
-                        },
-                        {
-                            url: "https://lh3.googleusercontent.com/d/1wE5b6Vewn9z2BfjdNVbkpTxJCCItJUIJ",
-                            caption: "Feuillet intérieur",
-                            notice: ""
-                        },
-                        {
-                            url: "https://lh3.googleusercontent.com/d/1r1KxcS8457I6xPSWw5mmX3H3UjMsZLnQ",
-                            caption: "Page de texte",
-                            notice: ""
-                        },
-                        {
-                            url: "https://lh3.googleusercontent.com/d/1I-lyNhqb0apCwBDGUaLdxWalvoWPTium",
-                            caption: "Page manuscrite annotée",
-                            notice: "Cette page manuscrite ancienne présente une écriture cursive tracée à l'encre brune sur un papier jauni et usé par le temps, comportant des annotations de notes personnelles ou de comptes."
-                        },
-                        {
-                            url: "https://lh3.googleusercontent.com/d/1nX3Ds5yXMpTgJECDsNY0SvJsdWRaa1sh",
-                            caption: "Mention manuscrite de propriété",
-                            notice: "Élégante écriture cursive à l'encre brune sur un papier vergé jauni, portant une inscription de propriété exarée à la main (\"Ce livre est aux... de Notre Dame d'Anonnay\")."
-                        },
-                        {
+                            category: "ornements",
                             url: "https://lh3.googleusercontent.com/d/1Fnt58tWLYdTGhzBVmXocU0O-ax2bISb2",
-                            caption: "Bandeau gravé & lettrine (A)",
+                            caption: "Bandeau gravé & lettrine ornée (A)",
                             notice: "Un somptueux bandeau ou en-tête gravé composé de rinceaux feuillagés et de volutes symétriques surplombe le titre du chapitre, tandis que le texte typographié en caractères romains et italiques s'ouvre par une magnifique lettrine ornée (\"A\") encadrée de motifs floraux et géométriques gravés sur bois."
                         },
                         {
-                            url: "https://lh3.googleusercontent.com/d/10tEFyAtOArpcuhrhn71M89P7ttlAubP1",
-                            caption: "Cul-de-lampe au mascaron",
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1106RZVmBEVJwmbgOzDToeraI_M2NjOp_",
+                            caption: "Cul-de-lampe au mascaron maniériste",
                             notice: "Un cul-de-lampe ou fleuron final gravé en creux présente un motif ornemental complexe de style maniériste, composé d'un mascaron ou d'un visage humain encadré de volutes et de draperies, surmontant des rinceaux feuillagés et des pendeloques suspendues en partie basse."
                         },
                         {
+                            category: "ornements",
                             url: "https://lh3.googleusercontent.com/d/1Z15iKkudCg5ntYOSGNha002kZalzjKiA",
                             caption: "Lettrine ornée (R)",
                             notice: "Une lettrine ornée (« R ») finement gravée sur bois met en valeur l'ouverture du texte, encadrée de motifs feuillagés et de rinceaux typiques des compositions typographiques de l'époque, sous un titre de chapitre et un texte en caractères italiques et romains."
                         },
                         {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1wE5b6Vewn9z2BfjdNVbkpTxJCCItJUIJ",
+                            caption: "Feuillet intérieur & lettrine",
+                            notice: ""
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1r1KxcS8457I6xPSWw5mmX3H3UjMsZLnQ",
+                            caption: "Page de texte & composition",
+                            notice: ""
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/1nX3Ds5yXMpTgJECDsNY0SvJsdWRaa1sh",
+                            caption: "Ex-libris manuscrit Notre-Dame d'Annonay",
+                            notice: "Élégante écriture cursive à l'encre brune sur un papier vergé jauni, portant une inscription de propriété exarée à la main (\"Ce livre est aux... de Notre Dame d'Anonnay\")."
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/1I-lyNhqb0apCwBDGUaLdxWalvoWPTium",
+                            caption: "Annotations & notes de comptes",
+                            notice: "Cette page manuscrite ancienne présente une écriture cursive tracée à l'encre brune sur un papier jauni et usé par le temps, comportant des annotations de notes personnelles ou de comptes."
+                        },
+                        {
+                            category: "exlibris",
                             url: "https://lh3.googleusercontent.com/d/1uErIkhDyuvMzHU35xoTIbKwyUfuX4RAg",
                             caption: "Page de garde & notes juridiques",
                             notice: "Une page de garde ancienne en papier vergé jauni et patine comporte des notes manuscrites à l'encre brune en écriture cursive juridique ou notariale de l'époque, avec quelques déchirures et réparations de papier anciennes sur les bords."
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/1Ppi6agE3jv18ScbE_XKCOMmbQiza4T0q",
+                            caption: "Reliure d'époque plein cuir",
+                            notice: "Reliure d'époque en plein cuir avec dos orné de nerfs et filets dorés, témoin du travail soigné des ateliers de reliure du premier tiers du XVIIe siècle."
                         }
                     ]
                 },
@@ -307,51 +308,61 @@
                     coverImage: "https://lh3.googleusercontent.com/d/10tPRmJYcyymSCKf0pqEIlzYB0QzKdx5S",
                     pages: [
                         {
+                            category: "gravures",
                             url: "https://lh3.googleusercontent.com/d/10tPRmJYcyymSCKf0pqEIlzYB0QzKdx5S",
                             caption: "Page de titre & Vision de Constantin",
                             notice: "La page de titre gravée d'une édition parisienne de 1673 présente, sous les mentions typographiques de l'ouvrage historique de Flavius Josèphe traduit par Arnauld d'Andilly, une belle vignette centrale rectangulaire illustrant une scène de vision chrétienne (la vision de Constantin) avec une grande croix lumineuse rayonnante portant l'inscription \"In hoc signo vinces\", des soldats ébahis agenouillés au campement et un ange dans le ciel, surmontant l'adresse de l'imprimeur parisien Pierre Le Petit."
                         },
                         {
-                            url: "https://lh3.googleusercontent.com/d/1039BJolGnJDHwyfBHytzmQZTtmTcomdl",
-                            caption: "Avertissement & Lettrine (L)",
-                            notice: "Un élégant bandeau typographique composé de fleurets floraux répétés en frise surplombe le titre « AVERTISSEMENT », tandis que le texte en caractères italiques s'ouvre sur une magnifique lettrine ornée (« L ») encadrée de feuillages gravés sur bois."
-                        },
-                        {
-                            url: "https://lh3.googleusercontent.com/d/105lDJWcduQIfVzVQfpUwEqe8WpXivaPu",
-                            caption: "Cul-de-lampe au bouquet & fleurets",
-                            notice: "Un magnifique cul-de-lampe ou fleuron gravé sur bois représente un vase ou un cornet d'où s'échappe un riche bouquet de fleurs stylisées aux pétales épanouis, faisant face à une page de texte typographiée en caractères romains et italiques sous un bandeau de fleurets et une lettrine ornée."
-                        },
-                        {
+                            category: "gravures",
                             url: "https://lh3.googleusercontent.com/d/106Hbdo62iFK5Ux08lApeBrnYySyangPc",
-                            caption: "Construction de l'Arche",
+                            caption: "Construction de l'Arche (Grande gravure)",
                             notice: "Une grande gravure sur cuivre en page entière représente une scène architecturale et biblique (la construction de l'Arche avec en haut un bâtiment rectangulaire à portiques et en bas une vaste perspective géométrique entourée de palissades, de personnages en costumes d'époque et d'animaux)."
                         },
                         {
+                            category: "gravures",
                             url: "https://lh3.googleusercontent.com/d/10C6w5z77vnbBonphg1WyVFLJdAvOKiXJ",
                             caption: "L'Arche d'alliance & Chérubins",
                             notice: "Une illustration gravée au centre de la page accompagne le titre du chapitre \"Description de l'Arche qui estoit dans le Tabernacle\", représentant un coffre rectangulaire sculpté (l'Arche d'alliance) surmonté de deux chérubins ailés agenouillés qui se font face, le tout placé dans un paysage sous un ciel nuageux."
                         },
                         {
+                            category: "gravures",
                             url: "https://lh3.googleusercontent.com/d/10EK4MUHIkq2HLh6D5WDb9EYxiGAc8KkO",
                             caption: "Table & Autels du Tabernacle",
                             notice: "Une gravure centrale illustre le chapitre VII (\"Description de la Table, du Chandelier d'or, & des Autels qui estoient dans le Tabernacle\"), représentant une longue table sculptée aux pieds colonnaires et munie de barres de transport, sur laquelle reposent deux coupes surmontées de nuages de fumée ou d'encens, le tout s'ouvrant sur un paysage vallonné en arrière-plan."
                         },
                         {
+                            category: "gravures",
                             url: "https://lh3.googleusercontent.com/d/10KNa43aBFki8avW1rRzTAAdRtJorbxjP",
-                            caption: "La Menorah (Candélabre)",
+                            caption: "La Menorah (Grand candélabre)",
                             notice: "Une gravure sur cuivre en page entière représente une menorah, le grand candélabre à sept branches richement orné et surmonté de flammes, dressé sur un pied ouvragé au premier plan d'un paysage vallonné où se tiennent trois personnages en robes contemplant la scène."
                         },
                         {
+                            category: "gravures",
                             url: "https://lh3.googleusercontent.com/d/10RixPOu5r9n3uDGWe2BTtFwcPxi17x4n",
                             caption: "Ustensiles liturgiques & Autel",
                             notice: "Des ustensiles liturgiques et des bassins sont disposés au premier plan de cette composition qui met en scène un autel rectangulaire à anneaux de transport et un petit foyer dégageant une épaisse fumée vers un ciel zébré de nuages."
                         },
                         {
+                            category: "gravures",
                             url: "https://lh3.googleusercontent.com/d/1-abfCBZ78RYvDxoWfIfpod0CT9XJu1e4",
                             caption: "Cérémonie sacerdotale de l'encens",
                             notice: "Deux personnages bibliques en costumes sacerdotaux, dont l'un porte le pectoral richement orné et la tiare, se font face pour manipuler un encensoir suspendu qui dégage d'importants panaches de fumée, sous le titre courant du \"Livre III. Chapitre VIII. 173\"."
                         },
                         {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1039BJolGnJDHwyfBHytzmQZTtmTcomdl",
+                            caption: "Avertissement & Lettrine (L)",
+                            notice: "Un élégant bandeau typographique composé de fleurets floraux répétés en frise surplombe le titre « AVERTISSEMENT », tandis que le texte en caractères italiques s'ouvre sur une magnifique lettrine ornée (« L ») encadrée de feuillages gravés sur bois."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/105lDJWcduQIfVzVQfpUwEqe8WpXivaPu",
+                            caption: "Cul-de-lampe au bouquet de fleurs",
+                            notice: "Un magnifique cul-de-lampe ou fleuron gravé sur bois représente un vase ou un cornet d'où s'échappe un riche bouquet de fleurs stylisées aux pétales épanouis, faisant face à une page de texte typographiée en caractères romains et italiques sous un bandeau de fleurets et une lettrine ornée."
+                        },
+                        {
+                            category: "ornements",
                             url: "https://lh3.googleusercontent.com/d/1-dxNqhQrGXBO0f6pXwtnGZlCOHqXohnA",
                             caption: "Cul-de-lampe au panier fleuri",
                             notice: "Un charmant petit cul-de-lampe ou fleuron gravé sur bois met en scène un panier tressé d'où jaillit une composition foisonnante de fleurs et de feuillages stylisés."
@@ -368,53 +379,109 @@
                     coverImage: "https://lh3.googleusercontent.com/d/11CMY4YM7M4-i_pgNpdGh7fU61sUVX8fN",
                     pages: [
                         {
+                            category: "gravures",
                             url: "https://lh3.googleusercontent.com/d/11CMY4YM7M4-i_pgNpdGh7fU61sUVX8fN",
                             caption: "Page de titre aux armes ducales (1692)",
                             notice: "Une composition héraldique somptueuse s'affiche au centre de cette page de titre parisienne de 1692 pour le catéchisme de l'archevêque duc de Reims, mettant en scène un écu surmonté d'une couronne comtale ou ducale et encadré de cordelières à houppes de prélat, le tout complété par des annotations manuscrites anciennes mentionnant son appartenance à l'abbaye de Juigny en 1724."
                         },
                         {
+                            category: "ornements",
                             url: "https://lh3.googleusercontent.com/d/1106RZVmBEVJwmbgOzDToeraI_M2NjOp_",
                             caption: "Cul-de-lampe triangulaire & rinceaux",
-                            notice: "Un délicat cul-de-lampe typographique triangulaire formé de rinceaux symétriques, de volutes et de petites fleurs stylisées vient clore la page sous le texte imprimé en caractères romains."
+                            notice: "Un délicat cul-de-lampe typographique triangulaire formé de rinceaux symétriqués, de volutes et de petites fleurs stylisées vient clore la page sous le texte imprimé en caractères romains."
                         },
                         {
+                            category: "ornements",
                             url: "https://lh3.googleusercontent.com/d/11aIaxpHlfJy0Vz9R3UIVcAA7VG9CP_5b",
                             caption: "Fleuron maniériste au mascaron & oiseaux",
                             notice: "Un fleuron ou cul-de-lampe gravé sur bois de style maniériste met en scène un mascaron central encadré de volutes symétriques, surmonté d'un panier garni de feuillets et flanqué de deux oiseaux perchés qui se penchent vers le sommet."
                         },
                         {
+                            category: "ornements",
                             url: "https://lh3.googleusercontent.com/d/11ZQwl37MA2JEulUqEG3F7mveZ5kHMNKR",
-                            caption: "Cartouche au mascaron & figures grotesques",
+                            caption: "Cartouche au mascaron & profils grotesques",
                             notice: "Un cartouche ornemental gravé sur bois de style Renaissance tardive ou maniériste met en scène un mascaron grimaçant flanqué de profils monstrueux ou de figures grotesques encadrées de rinceaux sculptés."
                         },
                         {
+                            category: "ornements",
                             url: "https://lh3.googleusercontent.com/d/11RYtmNbtnGWsbKGLARWRV7raVWUe7HIP",
                             caption: "Panier en osier fleuri",
                             notice: "Un élégant panier en osier tressé déborde d'une composition florale symétrique et foisonnante composée de fleurs épanouies et de feuilles découpées, formant un fleuron ornemental typique des impressions anciennes."
                         },
                         {
+                            category: "ornements",
                             url: "https://lh3.googleusercontent.com/d/11QIBGa6gF6GC1VWLx4EQQgMDODI3re5n",
                             caption: "Lettrine ornée géométrique (Q)",
                             notice: "Une lettrine ornée carrée gravée sur bois met en valeur la lettre « Q » inscrite au centre d'un losange géométrique finement ciselé, encadré de motifs feuillagés dans les coins et de frises torsadées, introduisant le texte en caractères typographiques."
                         },
                         {
+                            category: "ornements",
                             url: "https://lh3.googleusercontent.com/d/11P6vI78_fPyMRxegmezc6i7t4TEV3W2A",
                             caption: "Bandeau du Petit Catéchisme",
                             notice: "Un magnifique bandeau typographique gravé sur bois, richement orné de rinceaux symétriques, de volutes et de fleurs épanouies, surplombe le titre en caractères majuscules « PETIT CATECHISME, OU ABREGE DE LA DOCTRINE CHRESTIENNE »."
                         },
                         {
+                            category: "ornements",
                             url: "https://lh3.googleusercontent.com/d/11GfrI1uqr9xPr11K7XVqoGR8TTWIs_Jr",
                             caption: "Mandement épiscopal & Lettrine (C)",
                             notice: "Encadré par un élégant encadrement rectangulaire, un somptueux bandeau typographique gravé sur bois déploie des rinceaux feuillagés et des volutes florales au-dessus du mot « MANDEMENT » et des lignes typographiques annonçant les titres de l'archevêque duc de Reims, tandis qu'une belle lettrine ornée (« C ») introduit le texte épiscopal."
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/11CMY4YM7M4-i_pgNpdGh7fU61sUVX8fN",
+                            caption: "Ex-libris Abbaye de Juigny (1724)",
+                            notice: "Détail de la mention manuscrite de possession encrée au bas du titre : « Apartenant à l'abbaye de Juigny 1724 »."
                         }
                     ]
                 }
             ],
-            XVIII: [],
+            XVIII: [
+                {
+                    id: "homelies-careme-1706",
+                    year: 1706,
+                    title: "Homélies sur les évangiles de tous les jours de carême",
+                    author: "Par M. de Monmorel, Abbé de Lannoy, Aumônier de Madame la Duchesse de Bourgogne",
+                    centuryLabel: "XVIIIe SIÈCLE &bull; 1706",
+                    edition: "Tome VIII. À Paris, chez Denis Mariette, rue S. Jacques, à Saint Augustin (1706)",
+                    coverImage: "https://lh3.googleusercontent.com/d/1YxiQ6QZFIk6MZt7nA18oUCz7e4yGyCdx",
+                    pages: [
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1-AneCx_1sJDvRJ4e7HWlE23PGePjSYGB",
+                            caption: "Armoiries cardinalices de Noailles & Lettrine (M)",
+                            notice: "Une composition héraldique monumentale gravée sur cuivre déploie les armoiries cardinalices surmontées d'un chapeau prélatice et flanquées de deux figures féminines allégoriques assises, veillant au-dessus de la dédicace adressée au cardinal de Noailles, archevêque de Paris, tandis qu'une élégante lettrine « M » encadrée introduit le texte épiscopal."
+                        },
+                        {
+                            category: "gravures",
+                            url: "https://lh3.googleusercontent.com/d/1pOxTktU1LpVbRFSI8BtQ3s_ekOFLYjHc",
+                            caption: "Vignette sur cuivre du Christ & des Anges",
+                            notice: "Une vignette gravée sur cuivre en tête de chapitre illustre une scène biblique où le Christ nimbé de lumière est assis près de cruches posées au sol, tandis que des anges ailés s'affairent à ses côtés dans un paysage rocheux."
+                        },
+                        {
+                            category: "ornements",
+                            url: "https://lh3.googleusercontent.com/d/1Jw1uBNembX_Uk06Nvi0bxBUJc2YHQq-6",
+                            caption: "Cul-de-lampe aux pampres & grappes de raisin",
+                            notice: "Des rinceaux feuillagés symétriques et un médaillon circulaire central surmontent un lambrequin orné de pampres et de grappes de raisin pendantes dans ce délicat cul-de-lampe gravé sur bois typique du XVIIIe siècle."
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/1YxiQ6QZFIk6MZt7nA18oUCz7e4yGyCdx",
+                            caption: "Page de titre (1706) & notes marginales",
+                            notice: "Une page de titre typographique d'une édition parisienne de 1706 (Tome VIII des Homelies sur les evangiles de tous les jours de carême de l'abbé de Monmorel, publiées chez Denis Mariette) déploie une belle hiérarchie de caractères de plomb, rythmée par une croix latine centrale et de précieuses notes manuscrites anciennes dans les marges."
+                        },
+                        {
+                            category: "exlibris",
+                            url: "https://lh3.googleusercontent.com/d/1CzJE39AH0c79AxdPAtKesUZh26GsCgBx",
+                            caption: "Ex-libris manuscrit Marie Louise Lacroix de Batz",
+                            notice: "Tracée à l'encre brune d'une belle écriture cursive ancienne, une inscription de possession « Ce livre appartient à moi marie Louise Lacroix de batz » déploie ses larges boucles calligraphiques et ses paraphes décoratifs sur une garde ou une page de papier vergé."
+                        }
+                    ]
+                }
+            ],
             XIX: []
         };
 
-        // Tri automatique par ordre chronologique croissant
+        // Tri automatique chronologique
         Object.keys(catalog).forEach(century => {
             catalog[century].sort((a, b) => a.year - b.year);
         });
@@ -477,7 +544,6 @@
                     <div>
                         <div class="aspect-[3/4] overflow-hidden bg-black/60 rounded-sm mb-3 flex items-center justify-center relative">
                             <img src="${book.coverImage}" alt="${book.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <!-- Badge Âge sur la couverture -->
                             <div class="absolute top-2 right-2 bg-obsidian/85 border border-gold/40 text-gold px-1.5 py-0.5 rounded text-[9px] font-cinzel tracking-wider backdrop-blur-xs">
                                 ${bookAge} ans
                             </div>
@@ -519,28 +585,57 @@
             document.getElementById('detail-author').innerText = book.author;
             document.getElementById('detail-edition').innerText = book.edition;
 
-            const gridContainer = document.getElementById('detail-thumbnails-grid');
-            gridContainer.innerHTML = '';
-
-            // Remplissage de la grille de 3 colonnes de large
-            book.pages.forEach((page, index) => {
-                const card = document.createElement('button');
-                card.id = `thumb-${index}`;
-                card.onclick = () => selectPage(index);
-                card.className = `group flex flex-col p-2 rounded border text-left transition-all duration-200 focus:outline-none ${index === 0 ? 'border-gold bg-payne-base shadow-[0_0_12px_rgba(197,168,128,0.25)] ring-1 ring-gold' : 'border-payne-border/80 bg-black/40 hover:border-gold/50 hover:bg-payne-base/30'}`;
-
-                card.innerHTML = `
-                    <div class="aspect-[3/4] w-full overflow-hidden bg-black/80 rounded-xs flex items-center justify-center border border-payne-border/40 group-hover:border-gold/40">
-                        <img src="${page.url}" alt="${page.caption}" class="w-full h-full object-cover">
-                    </div>
-                    <span class="block text-[10px] font-cinzel text-neutral-300 group-hover:text-gold truncate mt-1.5 tracking-wider">
-                        ${index + 1}. ${page.caption}
-                    </span>
-                `;
-                gridContainer.appendChild(card);
-            });
-
+            renderCategorizedThumbnails(book);
             selectPage(0);
+        }
+
+        // RENDU DES 3 SECTIONS DE MINIATURES
+        function renderCategorizedThumbnails(book) {
+            const container = document.getElementById('detail-sections-container');
+            container.innerHTML = '';
+
+            const sectionsConfig = [
+                { key: 'gravures', title: 'I. Gravures & Planches illustrées' },
+                { key: 'ornements', title: 'II. Ornements typographiques & Lettrines' },
+                { key: 'exlibris', title: 'III. Ex-libris, Reliures & Particularités' }
+            ];
+
+            sectionsConfig.forEach(section => {
+                // Trouver les items de cette section en gardant leur index d'origine dans book.pages
+                const items = [];
+                book.pages.forEach((page, originalIdx) => {
+                    const cat = page.category || 'gravures';
+                    if (cat === section.key) {
+                        items.push({ page, originalIdx });
+                    }
+                });
+
+                if (items.length > 0) {
+                    const sectionWrapper = document.createElement('div');
+                    sectionWrapper.className = "space-y-2";
+
+                    sectionWrapper.innerHTML = `
+                        <div class="flex items-center gap-2 border-b border-payne-border/60 pb-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gold/70"></span>
+                            <h5 class="font-cinzel text-[11px] uppercase tracking-widest text-gold/90 font-medium">${section.title}</h5>
+                            <span class="text-[10px] text-neutral-500 font-cinzel ml-auto">(${items.length})</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            ${items.map(item => `
+                                <button id="thumb-${item.originalIdx}" onclick="selectPage(${item.originalIdx})" class="group flex flex-col p-1.5 rounded border text-left transition-all duration-200 focus:outline-none border-payne-border/80 bg-black/40 hover:border-gold/50 hover:bg-payne-base/30">
+                                    <div class="aspect-[3/4] w-full overflow-hidden bg-black/80 rounded-xs flex items-center justify-center border border-payne-border/40 group-hover:border-gold/40">
+                                        <img src="${item.page.url}" alt="${item.page.caption}" class="w-full h-full object-cover">
+                                    </div>
+                                    <span class="block text-[10px] font-cinzel text-neutral-300 group-hover:text-gold truncate mt-1 tracking-wider">
+                                        ${item.originalIdx + 1}.${item.page.caption}
+                                    </span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    `;
+                    container.appendChild(sectionWrapper);
+                }
+            });
         }
 
         function selectPage(index) {
@@ -555,12 +650,12 @@
                 mainImg.src = page.url;
                 mainImg.alt = page.caption;
                 mainImg.classList.remove('opacity-0');
-            }, 150);
+            }, 140);
 
-            // 2. Légende sous image
+            // 2. Légende
             document.getElementById('detail-image-legend').innerText = page.caption;
 
-            // 3. Notice & description
+            // 3. Notice descriptive
             const descEl = document.getElementById('detail-description-content');
             const headingEl = document.getElementById('detail-desc-heading');
             
@@ -580,9 +675,9 @@
                 const t = document.getElementById(`thumb-${i}`);
                 if (t) {
                     if (i === index) {
-                        t.className = "group flex flex-col p-2 rounded border-2 border-gold bg-payne-base shadow-[0_0_14px_rgba(197,168,128,0.3)] ring-1 ring-gold text-left transition-all duration-200";
+                        t.className = "group flex flex-col p-1.5 rounded border-2 border-gold bg-payne-base shadow-[0_0_14px_rgba(197,168,128,0.3)] ring-1 ring-gold text-left transition-all duration-200";
                     } else {
-                        t.className = "group flex flex-col p-2 rounded border border-payne-border/80 bg-black/40 hover:border-gold/50 hover:bg-payne-base/30 text-left opacity-75 hover:opacity-100 transition-all duration-200";
+                        t.className = "group flex flex-col p-1.5 rounded border border-payne-border/80 bg-black/40 hover:border-gold/50 hover:bg-payne-base/30 text-left opacity-75 hover:opacity-100 transition-all duration-200";
                     }
                 }
             });
@@ -592,7 +687,6 @@
             showCentury(currentCentury);
         }
 
-        // MODE PLEIN ÉCRAN POUR CONTEMPLATION
         function openModalFullscreen() {
             if (!currentBook || !currentBook.pages[currentPageIndex]) return;
             const page = currentBook.pages[currentPageIndex];
@@ -606,7 +700,6 @@
             document.getElementById('modal-fullscreen').classList.add('hidden');
         }
 
-        // NAVIGATION AU CLAVIER (Flèches gauche/droite et Échap)
         document.addEventListener('keydown', (e) => {
             const modal = document.getElementById('modal-fullscreen');
             if (!modal.classList.contains('hidden')) {
