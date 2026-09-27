@@ -37,10 +37,10 @@
         }
     </script>
     <style>
-        /* Défilement discret pour la description */
+        /* Défilement discret personnalisé */
         .custom-scroll::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+            width: 6px;
+            height: 6px;
         }
         .custom-scroll::-webkit-scrollbar-track {
             background: rgba(14, 18, 25, 0.6);
@@ -153,59 +153,67 @@
         <!-- 3. VUE FICHE LIVRE (Exactement 50% gauche / 50% droite) -->
         <section id="view-book-detail" class="absolute inset-0 z-10 hidden flex flex-col md:flex-row bg-[#08090b]">
             
-            <!-- PARTIE GAUCHE (50%) : Grande Image -->
+            <!-- PARTIE GAUCHE (50% de la largeur totale) : Grande Image Haute Définition -->
             <div class="w-full md:w-1/2 h-1/2 md:h-full relative bg-[#050608] border-b md:border-b-0 md:border-r border-payne-border flex items-center justify-center p-4 sm:p-8 overflow-hidden">
                 <div class="relative w-full h-full flex items-center justify-center">
                     <img id="detail-main-image" src="" alt="Vue de l'ouvrage" class="max-w-full max-h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] transition-all duration-500 rounded-sm">
                 </div>
                 <!-- Légende sous image -->
-                <div class="absolute bottom-3 left-6 right-6 flex items-center justify-between text-[11px] text-neutral-400 font-cinzel bg-obsidian/75 py-1 px-3 border border-payne-border/60 backdrop-blur-sm">
+                <div class="absolute bottom-3 left-6 right-6 flex items-center justify-between text-[11px] text-neutral-400 font-cinzel bg-obsidian/85 py-1 px-3 border border-payne-border/60 backdrop-blur-sm">
                     <span id="detail-image-legend">Page de titre</span>
                     <span class="text-gold tracking-widest">COLLECTION PRIVÉE</span>
                 </div>
             </div>
 
-            <!-- PARTIE DROITE (50%) : Données, Notice & Ascenseur, Miniatures -->
-            <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-[#0b0d12] p-6 sm:p-10 justify-between">
+            <!-- PARTIE DROITE (50% de la largeur totale) : Divisée exactement en deux moitiés égales (50% haut / 50% bas) -->
+            <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-[#0b0d12]">
                 
-                <!-- 1. En-tête de l'ouvrage (Fixe) -->
-                <div class="border-b border-payne-border pb-4 flex-none">
-                    <div class="flex items-center justify-between mb-2">
-                        <span id="detail-century" class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">XVIIe SIÈCLE</span>
-                        <button onclick="backToGallery()" class="text-[11px] font-cinzel tracking-widest text-neutral-400 hover:text-gold uppercase transition flex items-center gap-1">
-                            &larr; Revenir aux livres
-                        </button>
+                <!-- MOITIÉ SUPÉRIEURE (50% de la hauteur) : En-tête + Notice textuelle avec son ascenseur -->
+                <div class="h-1/2 flex flex-col p-6 sm:p-8 border-b border-payne-border/80 overflow-hidden">
+                    
+                    <!-- En-tête fixe -->
+                    <div class="flex-none pb-3 border-b border-payne-border/50">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span id="detail-century" class="font-cinzel text-xs tracking-[0.25em] text-gold uppercase">XVIIe SIÈCLE</span>
+                            <button onclick="backToGallery()" class="text-[11px] font-cinzel tracking-widest text-neutral-400 hover:text-gold uppercase transition flex items-center gap-1">
+                                &larr; Revenir aux livres
+                            </button>
+                        </div>
+                        <h2 id="detail-title" class="font-cinzel text-xl sm:text-2xl text-neutral-100 font-semibold tracking-wide leading-tight mb-1">
+                            Titre de l'ouvrage
+                        </h2>
+                        <p id="detail-author" class="font-garamond italic text-base sm:text-lg text-neutral-300">
+                            Auteur
+                        </p>
+                        <p id="detail-edition" class="text-[11px] font-cinzel text-neutral-400 tracking-wider mt-0.5">
+                            Détails d'édition
+                        </p>
                     </div>
-                    <h2 id="detail-title" class="font-cinzel text-2xl sm:text-3xl text-neutral-100 font-semibold tracking-wide leading-tight mb-1">
-                        Titre de l'ouvrage
-                    </h2>
-                    <p id="detail-author" class="font-garamond italic text-lg text-neutral-300">
-                        Auteur
-                    </p>
-                    <p id="detail-edition" class="text-xs font-cinzel text-neutral-400 tracking-wider mt-1">
-                        Détails d'édition
-                    </p>
+
+                    <!-- Zone de Notice avec Ascenseur -->
+                    <div class="flex-1 mt-3 overflow-y-auto pr-3 custom-scroll">
+                        <div class="flex items-center gap-2 mb-1.5 sticky top-0 bg-[#0b0d12]/95 py-0.5 z-10 backdrop-blur-xs">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                            <h4 id="detail-desc-heading" class="font-cinzel text-xs uppercase tracking-widest text-gold/90">Notice & Présentation</h4>
+                        </div>
+                        <div id="detail-description-content" class="text-neutral-300 text-sm sm:text-base leading-relaxed font-light font-garamond space-y-2">
+                        </div>
+                    </div>
                 </div>
 
-                <!-- 2. Bloc de description (Avec ascenseur fluide) -->
-                <div class="flex-1 my-5 overflow-y-auto pr-3 custom-scroll">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
-                        <h4 id="detail-desc-heading" class="font-cinzel text-xs uppercase tracking-widest text-gold/90">Notice & Présentation</h4>
-                    </div>
-                    <!-- Texte descriptif dynamique -->
-                    <div id="detail-description-content" class="text-neutral-300 text-base sm:text-lg leading-relaxed font-light font-garamond space-y-3">
-                    </div>
-                </div>
-
-                <!-- 3. Section des Miniatures (Fixe en bas) -->
-                <div class="flex-none pt-3 border-t border-payne-border">
-                    <div class="flex items-center justify-between mb-2.5">
-                        <span class="font-cinzel text-[11px] tracking-widest text-neutral-400 uppercase">Feuilleter l'ouvrage (Sélection de pages)</span>
-                        <span id="mini-counter" class="text-[11px] font-cinzel text-gold">1 / 1</span>
+                <!-- MOITIÉ INFÉRIEURE (50% de la hauteur) : Espace Miniatures grand format pour combler le vide -->
+                <div class="h-1/2 flex flex-col p-6 sm:p-8 bg-[#090b0f] overflow-hidden">
+                    <div class="flex items-center justify-between pb-3 flex-none">
+                        <div class="flex items-center gap-2">
+                            <span class="font-cinzel text-xs tracking-widest text-neutral-300 uppercase font-semibold">Feuilleter l'ouvrage</span>
+                            <span class="text-[11px] font-garamond italic text-neutral-500">(Sélectionnez une planche pour l'afficher en grand)</span>
+                        </div>
+                        <span id="mini-counter" class="text-xs font-cinzel text-gold font-medium bg-payne-base/80 px-2.5 py-0.5 rounded border border-payne-border">1 / 10</span>
                     </div>
                     
-                    <div id="detail-thumbnails-container" class="flex gap-2.5 overflow-x-auto pb-2 custom-scroll">
+                    <!-- Galerie des miniatures : grandes cartes avec défilement fluide sans vide -->
+                    <div id="detail-thumbnails-container" class="flex-1 flex gap-4 overflow-x-auto items-center pb-2 pt-1 custom-scroll px-1">
+                        <!-- Miniatures générées dynamiquement -->
                     </div>
                 </div>
 
@@ -435,15 +443,22 @@
             thumbsContainer.innerHTML = '';
 
             book.pages.forEach((page, index) => {
-                const thumb = document.createElement('button');
-                thumb.className = `flex-none w-14 h-20 rounded border ${index === 0 ? 'border-gold ring-1 ring-gold' : 'border-payne-border opacity-70'} hover:opacity-100 overflow-hidden bg-black transition-all transform hover:scale-105 focus:outline-none`;
-                thumb.id = `thumb-${index}`;
-                thumb.onclick = () => selectPage(index);
+                const card = document.createElement('button');
+                card.id = `thumb-${index}`;
+                card.onclick = () => selectPage(index);
+                card.className = `flex-none flex flex-col items-center p-2 rounded border transition-all duration-300 transform focus:outline-none ${index === 0 ? 'border-gold bg-payne-base/70 shadow-[0_0_15px_rgba(197,168,128,0.25)] scale-[1.02]' : 'border-payne-border bg-black/40 hover:border-gold/60 hover:bg-payne-base/40 opacity-75 hover:opacity-100'}`;
+                
+                // Grandes dimensions pour bien occuper les 50% de hauteur
+                card.style.width = "125px";
+                card.style.height = "100%";
 
-                thumb.innerHTML = `
-                    <img src="${page.url}" alt="${page.caption}" class="w-full h-full object-cover">
+                card.innerHTML = `
+                    <div class="w-full flex-1 overflow-hidden bg-black/70 rounded-xs flex items-center justify-center p-0.5">
+                        <img src="${page.url}" alt="${page.caption}" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <span class="block w-full text-[10px] font-cinzel text-neutral-300 truncate mt-2 text-center tracking-wider">${page.caption}</span>
                 `;
-                thumbsContainer.appendChild(thumb);
+                thumbsContainer.appendChild(card);
             });
 
             selectPage(0);
@@ -462,7 +477,7 @@
                 mainImg.classList.remove('opacity-0');
             }, 180);
 
-            // 2. Légende
+            // 2. Légende sous image
             document.getElementById('detail-image-legend').innerText = page.caption;
 
             // 3. Notice & description
@@ -480,14 +495,14 @@
             // 4. Compteur
             document.getElementById('mini-counter').innerText = `${index + 1} / ${currentBook.pages.length}`;
 
-            // 5. Stylisation vignette active
+            // 5. Stylisation vignette active (mise en valeur grand format)
             currentBook.pages.forEach((_, i) => {
                 const t = document.getElementById(`thumb-${i}`);
                 if (t) {
                     if (i === index) {
-                        t.className = "flex-none w-14 h-20 rounded border-2 border-gold ring-1 ring-gold opacity-100 overflow-hidden bg-black transition-all";
+                        t.className = "flex-none flex flex-col items-center p-2 rounded border-2 border-gold bg-payne-base shadow-[0_0_16px_rgba(197,168,128,0.35)] scale-[1.03] opacity-100 transition-all duration-300";
                     } else {
-                        t.className = "flex-none w-14 h-20 rounded border border-payne-border opacity-60 hover:opacity-100 overflow-hidden bg-black transition-all";
+                        t.className = "flex-none flex flex-col items-center p-2 rounded border border-payne-border bg-black/40 hover:border-gold/60 hover:bg-payne-base/40 opacity-70 hover:opacity-100 transition-all duration-300";
                     }
                 }
             });
