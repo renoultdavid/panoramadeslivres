@@ -83,13 +83,16 @@
 
     <!-- BANDEAU SUPÉRIEUR MUSÉAL -->
     <header class="h-16 flex-none bg-[#0c0e13]/95 border-b border-payne-border/60 px-6 sm:px-10 flex items-center justify-between z-30 shadow-2xl backdrop-blur-md">
-        <button onclick="showHome()" class="flex items-center gap-3 group text-left transition focus:outline-none">
-            <span class="w-2.5 h-2.5 rounded-full bg-gold/80 group-hover:scale-125 transition-transform"></span>
-            <div>
-                <span class="font-cinzel text-sm sm:text-base font-bold tracking-[0.25em] text-neutral-200 group-hover:text-gold transition">LE COIN DES BIBLIOPHILES</span>
-                <span class="block text-[10px] tracking-widest text-neutral-400 font-cinzel uppercase -mt-0.5">La beauté des livres</span>
-            </div>
-        </button>
+        <div class="flex items-center gap-4">
+            <a href="https://renoultdavid.github.io/accueil/" title="Accueil général" class="w-8 h-8 rounded-full border border-payne-border/80 bg-payne-base/60 hover:bg-payne-light hover:border-gold text-neutral-300 hover:text-gold flex items-center justify-center text-sm transition-all duration-200">🏠</a>
+            <button onclick="showHome()" class="flex items-center gap-3 group text-left transition focus:outline-none">
+                <span class="w-2.5 h-2.5 rounded-full bg-gold/80 group-hover:scale-125 transition-transform"></span>
+                <div>
+                    <span class="font-cinzel text-sm sm:text-base font-bold tracking-[0.25em] text-neutral-200 group-hover:text-gold transition">LE COIN DES BIBLIOPHILES</span>
+                    <span class="block text-[10px] tracking-widest text-neutral-400 font-cinzel uppercase -mt-0.5">La beauté des livres</span>
+                </div>
+            </button>
+        </div>
 
         <nav class="flex items-center gap-3 sm:gap-4">
             <button onclick="showCentury('XVII')" id="btn-XVII" class="century-btn-pulse px-3.5 sm:px-4 py-1.5 rounded border border-gold/40 bg-payne-base/80 hover:bg-payne-light hover:border-gold text-gold font-cinzel text-xs tracking-wider transition-all duration-300 transform active:scale-95">
@@ -100,6 +103,9 @@
             </button>
             <button onclick="showCentury('XIX')" id="btn-XIX" class="century-btn-pulse px-3.5 sm:px-4 py-1.5 rounded border border-neutral-700/60 bg-payne-base/60 hover:bg-payne-light hover:border-gold text-neutral-300 hover:text-gold font-cinzel text-xs tracking-wider transition-all duration-300 transform active:scale-95">
                 XIX<sup class="text-[9px]">e</sup>
+            </button>
+            <button onclick="toggleFullScreen()" title="Plein écran" class="px-3 py-1.5 rounded border border-payne-border/80 bg-payne-base/60 hover:bg-payne-light hover:border-gold text-neutral-300 hover:text-gold font-cinzel text-xs tracking-wider transition-all duration-200 flex items-center gap-1.5">
+                ⛶ Plein écran
             </button>
         </nav>
     </header>
@@ -1105,6 +1111,19 @@
                 }
             }
         });
+
+        /* BASCULE PLEIN ÉCRAN */
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.warn("Plein écran non supporté ou bloqué :", err);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
     </script>
 </body>
 </html>
